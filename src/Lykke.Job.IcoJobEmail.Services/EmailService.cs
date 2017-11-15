@@ -19,10 +19,6 @@ namespace Lykke.Job.IcoJobEmail.Services
         private readonly string _bodyInvestorSummary;
         private readonly string _bodyInvestorKycRequest;
         private readonly string _bodyInvestorNewTransaction;
-        private readonly string _bodyAdminNewTransaction;
-
-
-        private readonly string _templatesUrl = "";
 
         public EmailService(ILog log, ISmtpService smtpService, string contentUrl, string icoSiteUrl)
         {
