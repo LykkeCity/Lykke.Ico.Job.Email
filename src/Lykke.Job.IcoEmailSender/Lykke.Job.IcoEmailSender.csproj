@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lykke.Job.IcoJobEmail.Core\Lykke.Job.IcoEmailSender.Core.csproj" />
-    <ProjectReference Include="..\Lykke.Job.IcoJobEmail.Services\Lykke.Job.IcoEmailSender.Services.csproj" />
+    <ProjectReference Include="..\Lykke.Job.IcoEmailSender.Core\Lykke.Job.IcoEmailSender.Core.csproj" />
+    <ProjectReference Include="..\Lykke.Job.IcoEmailSender.Services\Lykke.Job.IcoEmailSender.Services.csproj" />
   </ItemGroup>
 </Project>
