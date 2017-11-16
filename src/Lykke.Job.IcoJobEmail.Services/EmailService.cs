@@ -1,11 +1,11 @@
 ﻿using Lykke.Job.IcoJobEmail.Core.Services;
 using System;
-using Lykke.Ico.Core.Contracts.Emails;
 using Common.Log;
 using System.Threading.Tasks;
 using Lykke.Ico.Core;
 using Lykke.Ico.Core.Contracts;
 using System.Net;
+using Lykke.Ico.Core.Contracts.Queues;
 
 namespace Lykke.Job.IcoJobEmail.Services
 {
@@ -45,7 +45,7 @@ namespace Lykke.Job.IcoJobEmail.Services
             }
         }
 
-        public async Task SendEmail(InvestorConfirmation message)
+        public async Task SendEmail(InvestorConfirmationMessage message)
         {
             var body = _bodyInvestorConfirmation
                 .Replace("{ConfirmationLink}", $"{_icoSiteUrl}register/{message.ConfirmationToken}");
@@ -53,16 +53,19 @@ namespace Lykke.Job.IcoJobEmail.Services
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorConfirmation, body);
         }
 
-        public async void SendEmail(InvestorSummary message)
+        public async void SendEmail(InvestorSummaryMessage message)
         {
             var body = _bodyInvestorConfirmation
-                .Replace("{BtcAddress}", message.BtcAddress)
-                .Replace("{EthAddress}", message.EthAddress);
+                .Replace("{PayInBtcAddress}", message.PayInBtcAddress)
+                .Replace("{PayInEthAddress}", message.PayInEthAddress)
+                .Replace("{RefundBtcAddress}", message.RefundBtcAddress)
+                .Replace("{RefundEthAddress}", message.RefundEthAddress)
+                .Replace("{TokenAddress}", message.TokenAddress);
 
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorSummary, body);
         }
 
-        public async void SendEmail(InvestorKycRequest message)
+        public async void SendEmail(InvestorKycRequestMessage message)
         {
             var body = _bodyInvestorConfirmation
                 .Replace("{KycId}", message.KycId);
@@ -70,12 +73,12 @@ namespace Lykke.Job.IcoJobEmail.Services
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorKycRequest, body);
         }
 
-        public async void SendEmail(InvestorNewTransaction message)
+        public async void SendEmail(InvestorNewTransactionMessage message)
         {
             var body = _bodyInvestorConfirmation
                 .Replace("{KycId}", message.Amount)
                 .Replace("{CurrencyType}", Enum.GetName(typeof(CurrencyType), message.CurrencyType))
-                .Replace("{TokensAmount}", message.TokensAmount);
+                .Replace("{Amount}", message.Amount);
 
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorNewTransaction, body);
         }

@@ -21,18 +21,6 @@ namespace Lykke.Job.IcoJobEmail.Controllers
             _emailService = emailService;
         }
 
-        [HttpGet("TestEmail")]
-        public IActionResult TestEmail()
-        {
-            _emailService.SendEmail(new Ico.Core.Contracts.Emails.InvestorConfirmation
-            {
-                EmailTo = "andrey.krivoshapov@lykke.com",
-                ConfirmationToken = Guid.NewGuid().ToString()
-            });
-
-            return Ok();
-        }
-
         /// <summary>
         /// Checks service is alive
         /// </summary>
