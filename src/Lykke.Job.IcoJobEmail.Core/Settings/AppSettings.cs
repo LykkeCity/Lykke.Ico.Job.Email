@@ -1,11 +1,11 @@
-﻿using Lykke.Job.IcoJobEmail.Core.Settings.JobSettings;
-using Lykke.Job.IcoJobEmail.Core.Settings.SlackNotifications;
+﻿using Lykke.Job.IcoEmailSender.Core.Settings.JobSettings;
+using Lykke.Job.IcoEmailSender.Core.Settings.SlackNotifications;
 
-namespace Lykke.Job.IcoJobEmail.Core.Settings
+namespace Lykke.Job.IcoEmailSender.Core.Settings
 {
     public class AppSettings
     {
-        public IcoJobEmailSettings IcoJobEmailJob { get; set; }
+        public IcoEmailSenderSettings IcoEmailSenderJob { get; set; }
         public SlackNotificationsSettings SlackNotifications { get; set; }
     }
 }

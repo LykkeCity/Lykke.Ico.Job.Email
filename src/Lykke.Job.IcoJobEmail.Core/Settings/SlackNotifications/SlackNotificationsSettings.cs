@@ -1,4 +1,4 @@
-namespace Lykke.Job.IcoJobEmail.Core.Settings.SlackNotifications
+namespace Lykke.Job.IcoEmailSender.Core.Settings.SlackNotifications
 {
     public class SlackNotificationsSettings
     {

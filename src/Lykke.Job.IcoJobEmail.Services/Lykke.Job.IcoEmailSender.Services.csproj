@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lykke.Job.IcoJobEmail.Core\Lykke.Job.IcoJobEmail.Core.csproj" />
+    <ProjectReference Include="..\Lykke.Job.IcoJobEmail.Core\Lykke.Job.IcoEmailSender.Core.csproj" />
   </ItemGroup>
 
 </Project>

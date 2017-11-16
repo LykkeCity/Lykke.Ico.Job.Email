@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Common.Log;
-using Lykke.Job.IcoJobEmail.Core.Services;
+using Lykke.Job.IcoEmailSender.Core.Services;
 
-namespace Lykke.Job.IcoJobEmail.Services
+namespace Lykke.Job.IcoEmailSender.Services
 {
     // NOTE: Sometimes, shutdown process should be expressed explicitly. 
     // If this is your case, use this class to manage shutdown.

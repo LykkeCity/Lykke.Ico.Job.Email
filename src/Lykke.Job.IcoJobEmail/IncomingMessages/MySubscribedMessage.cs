@@ -1,4 +1,4 @@
-﻿namespace Lykke.Job.IcoJobEmail.IncomingMessages
+﻿namespace Lykke.Job.IcoEmailSender.IncomingMessages
 {
     // NOTE: This is incoming message example
     public class MySubscribedMessage

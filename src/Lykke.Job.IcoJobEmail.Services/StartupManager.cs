@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Common.Log;
-using Lykke.Job.IcoJobEmail.Core.Services;
+using Lykke.Job.IcoEmailSender.Core.Services;
 
-namespace Lykke.Job.IcoJobEmail.Services
+namespace Lykke.Job.IcoEmailSender.Services
 {
     // NOTE: Sometimes, startup process which is expressed explicitly is not just better, 
     // but the only way. If this is your case, use this class to manage startup.

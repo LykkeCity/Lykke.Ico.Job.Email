@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Lykke.Job.IcoJobEmail.Core.Services
+namespace Lykke.Job.IcoEmailSender.Core.Services
 {
     public interface IShutdownManager
     {

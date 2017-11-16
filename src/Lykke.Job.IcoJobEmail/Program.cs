@@ -3,13 +3,13 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Lykke.Job.IcoJobEmail
+namespace Lykke.Job.IcoEmailSender
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine($"IcoJobEmail version {Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationVersion}");
+            Console.WriteLine($"IcoEmailSender version {Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationVersion}");
 #if DEBUG
             Console.WriteLine("Is DEBUG");
 #else

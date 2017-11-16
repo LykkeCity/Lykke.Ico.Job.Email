@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Lykke.Job.IcoJobEmail.Models
+namespace Lykke.Job.IcoEmailSender.Models
 {
     public class IsAliveResponse
     {

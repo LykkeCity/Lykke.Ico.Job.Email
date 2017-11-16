@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lykke.Job.IcoJobEmail.Core.Settings.JobSettings
+namespace Lykke.Job.IcoEmailSender.Core.Settings.JobSettings
 {
     public class SmtpSettings
     {

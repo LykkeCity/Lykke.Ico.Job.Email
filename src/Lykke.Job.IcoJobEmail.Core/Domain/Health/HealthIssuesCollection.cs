@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Lykke.Job.IcoJobEmail.Core.Domain.Health
+namespace Lykke.Job.IcoEmailSender.Core.Domain.Health
 {
     public class HealthIssuesCollection : IReadOnlyCollection<HealthIssue>
     {

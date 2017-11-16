@@ -1,20 +1,20 @@
 ﻿using Autofac;
 using Common.Log;
-using Lykke.Job.IcoJobEmail.Core.Services;
-using Lykke.Job.IcoJobEmail.Core.Settings.JobSettings;
-using Lykke.Job.IcoJobEmail.Services;
+using Lykke.Job.IcoEmailSender.Core.Services;
+using Lykke.Job.IcoEmailSender.Core.Settings.JobSettings;
+using Lykke.Job.IcoEmailSender.Services;
 using Lykke.SettingsReader;
 using Lykke.JobTriggers.Extenstions;
 
-namespace Lykke.Job.IcoJobEmail.Modules
+namespace Lykke.Job.IcoEmailSender.Modules
 {
     public class JobModule : Module
     {
-        private readonly IcoJobEmailSettings _settings;
+        private readonly IcoEmailSenderSettings _settings;
         private readonly IReloadingManager<DbSettings> _dbSettingsManager;
         private readonly ILog _log;
 
-        public JobModule(IcoJobEmailSettings settings, IReloadingManager<DbSettings> dbSettingsManager, ILog log)
+        public JobModule(IcoEmailSenderSettings settings, IReloadingManager<DbSettings> dbSettingsManager, ILog log)
         {
             _settings = settings;
             _log = log;

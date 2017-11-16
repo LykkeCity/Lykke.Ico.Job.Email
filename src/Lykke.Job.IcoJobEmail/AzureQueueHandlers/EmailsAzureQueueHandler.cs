@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Lykke.JobTriggers.Triggers.Attributes;
 using Lykke.Ico.Core;
-using Lykke.Job.IcoJobEmail.Core.Services;
+using Lykke.Job.IcoEmailSender.Core.Services;
 using Common.Log;
 using Lykke.Ico.Core.Contracts.Queues;
 
-namespace Lykke.Job.IcoJobEmail.AzureQueueHandlers
+namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
 {
     public class EmailsAzureQueueHandler
     {

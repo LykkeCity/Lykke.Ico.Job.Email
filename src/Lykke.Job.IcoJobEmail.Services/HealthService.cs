@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Lykke.Job.IcoJobEmail.Core.Domain.Health;
-using Lykke.Job.IcoJobEmail.Core.Services;
+using Lykke.Job.IcoEmailSender.Core.Domain.Health;
+using Lykke.Job.IcoEmailSender.Core.Services;
 
-namespace Lykke.Job.IcoJobEmail.Services
+namespace Lykke.Job.IcoEmailSender.Services
 {
     // NOTE: See https://lykkex.atlassian.net/wiki/spaces/LKEWALLET/pages/35755585/Add+your+app+to+Monitoring
     public class HealthService : IHealthService

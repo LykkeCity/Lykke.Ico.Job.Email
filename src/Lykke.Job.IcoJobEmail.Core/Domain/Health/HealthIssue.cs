@@ -1,4 +1,4 @@
-﻿namespace Lykke.Job.IcoJobEmail.Core.Domain.Health
+﻿namespace Lykke.Job.IcoEmailSender.Core.Domain.Health
 {
     public class HealthIssue
     {

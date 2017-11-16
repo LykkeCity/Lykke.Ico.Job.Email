@@ -1,13 +1,13 @@
 ﻿using Common.Log;
-using Lykke.Job.IcoJobEmail.Core.Services;
-using Lykke.Job.IcoJobEmail.Core.Settings.JobSettings;
+using Lykke.Job.IcoEmailSender.Core.Services;
+using Lykke.Job.IcoEmailSender.Core.Settings.JobSettings;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
 using System.Threading.Tasks;
 
-namespace Lykke.Job.IcoJobEmail.Services
+namespace Lykke.Job.IcoEmailSender.Services
 {
     public class SmtpService : ISmtpService
     {

@@ -1,7 +1,7 @@
 ﻿using Lykke.Ico.Core.Contracts.Queues;
 using System.Threading.Tasks;
 
-namespace Lykke.Job.IcoJobEmail.Core.Services
+namespace Lykke.Job.IcoEmailSender.Core.Services
 {
     public interface IEmailService
     {

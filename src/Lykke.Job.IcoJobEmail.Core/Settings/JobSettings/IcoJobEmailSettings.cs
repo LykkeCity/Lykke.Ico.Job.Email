@@ -1,6 +1,6 @@
-﻿namespace Lykke.Job.IcoJobEmail.Core.Settings.JobSettings
+﻿namespace Lykke.Job.IcoEmailSender.Core.Settings.JobSettings
 {
-    public class IcoJobEmailSettings
+    public class IcoEmailSenderSettings
     {
         public DbSettings Db { get; set; }
         public AzureQueueSettings AzureQueue { get; set; }

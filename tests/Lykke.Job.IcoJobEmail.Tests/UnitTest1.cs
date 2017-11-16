@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Lykke.Job.IcoJobEmail.Tests
+namespace Lykke.Job.IcoEmailSender.Tests
 {
     public class UnitTest1
     {

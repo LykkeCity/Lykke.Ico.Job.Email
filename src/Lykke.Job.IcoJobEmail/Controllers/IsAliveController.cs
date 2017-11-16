@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using Lykke.Job.IcoJobEmail.Core.Services;
-using Lykke.Job.IcoJobEmail.Models;
+using Lykke.Job.IcoEmailSender.Core.Services;
+using Lykke.Job.IcoEmailSender.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 
-namespace Lykke.Job.IcoJobEmail.Controllers
+namespace Lykke.Job.IcoEmailSender.Controllers
 {
     // NOTE: See https://lykkex.atlassian.net/wiki/spaces/LKEWALLET/pages/35755585/Add+your+app+to+Monitoring
     [Route("api/[controller]")]

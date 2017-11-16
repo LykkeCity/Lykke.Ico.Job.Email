@@ -1,4 +1,4 @@
-﻿using Lykke.Job.IcoJobEmail.Core.Services;
+﻿using Lykke.Job.IcoEmailSender.Core.Services;
 using System;
 using Common.Log;
 using System.Threading.Tasks;
@@ -7,7 +7,7 @@ using Lykke.Ico.Core.Contracts;
 using System.Net;
 using Lykke.Ico.Core.Contracts.Queues;
 
-namespace Lykke.Job.IcoJobEmail.Services
+namespace Lykke.Job.IcoEmailSender.Services
 {
     public class EmailService : IEmailService
     {

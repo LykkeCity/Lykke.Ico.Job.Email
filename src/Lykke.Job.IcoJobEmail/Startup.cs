@@ -6,10 +6,10 @@ using AzureStorage.Tables;
 using Common.Log;
 using Lykke.Common.ApiLibrary.Middleware;
 using Lykke.Common.ApiLibrary.Swagger;
-using Lykke.Job.IcoJobEmail.Core.Services;
-using Lykke.Job.IcoJobEmail.Core.Settings;
-using Lykke.Job.IcoJobEmail.Models;
-using Lykke.Job.IcoJobEmail.Modules;
+using Lykke.Job.IcoEmailSender.Core.Services;
+using Lykke.Job.IcoEmailSender.Core.Settings;
+using Lykke.Job.IcoEmailSender.Models;
+using Lykke.Job.IcoEmailSender.Modules;
 using Lykke.Logs;
 using Lykke.SettingsReader;
 using Lykke.SlackNotification.AzureQueue;
@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Lykke.Job.IcoJobEmail
+namespace Lykke.Job.IcoEmailSender
 {
     public class Startup
     {
@@ -54,7 +54,7 @@ namespace Lykke.Job.IcoJobEmail
 
                 services.AddSwaggerGen(options =>
                 {
-                    options.DefaultLykkeConfiguration("v1", "IcoJobEmail API");
+                    options.DefaultLykkeConfiguration("v1", "IcoEmailSender API");
                 });
 
                 var builder = new ContainerBuilder();
@@ -62,7 +62,7 @@ namespace Lykke.Job.IcoJobEmail
 
                 Log = CreateLogWithSlack(services, appSettings);
 
-                builder.RegisterModule(new JobModule(appSettings.CurrentValue.IcoJobEmailJob, appSettings.Nested(x => x.IcoJobEmailJob.Db), Log));
+                builder.RegisterModule(new JobModule(appSettings.CurrentValue.IcoEmailSenderJob, appSettings.Nested(x => x.IcoEmailSenderJob.Db), Log));
 
                 builder.Populate(services);
 
@@ -86,7 +86,7 @@ namespace Lykke.Job.IcoJobEmail
                     app.UseDeveloperExceptionPage();
                 }
 
-                app.UseLykkeMiddleware("IcoJobEmail", ex => new ErrorResponse {ErrorMessage = "Technical problem"});
+                app.UseLykkeMiddleware("IcoEmailSender", ex => new ErrorResponse {ErrorMessage = "Technical problem"});
 
                 app.UseMvc();
                 app.UseSwagger();
@@ -183,14 +183,14 @@ namespace Lykke.Job.IcoJobEmail
                 QueueName = settings.CurrentValue.SlackNotifications.AzureQueue.QueueName
             }, aggregateLogger);
 
-            var dbLogConnectionStringManager = settings.Nested(x => x.IcoJobEmailJob.Db.LogsConnString);
+            var dbLogConnectionStringManager = settings.Nested(x => x.IcoEmailSenderJob.Db.LogsConnString);
             var dbLogConnectionString = dbLogConnectionStringManager.CurrentValue;
 
             // Creating azure storage logger, which logs own messages to concole log
             if (!string.IsNullOrEmpty(dbLogConnectionString) && !(dbLogConnectionString.StartsWith("${") && dbLogConnectionString.EndsWith("}")))
             {
                 var persistenceManager = new LykkeLogToAzureStoragePersistenceManager(
-                    AzureTableStorage<LogEntity>.Create(dbLogConnectionStringManager, "IcoJobEmailLog", consoleLogger),
+                    AzureTableStorage<LogEntity>.Create(dbLogConnectionStringManager, "IcoEmailSenderLog", consoleLogger),
                     consoleLogger);
 
                 var slackNotificationsManager = new LykkeLogToAzureSlackNotificationsManager(slackService, consoleLogger);
