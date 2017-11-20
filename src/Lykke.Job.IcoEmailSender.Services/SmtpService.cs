@@ -32,15 +32,17 @@ namespace Lykke.Job.IcoEmailSender.Services
             }
             else
             {
-                var builder = new BodyBuilder();
-                builder.HtmlBody = body;
+                var builder = new BodyBuilder
+                {
+                    HtmlBody = body
+                };
 
                 foreach (var item in attachments)
                 {
                     var image = builder.LinkedResources.Add(item.Key, item.Value);
                     image.ContentId = MimeUtils.GenerateMessageId();
 
-                    builder.HtmlBody = body.Replace($"{{{item.Key}}}", image.ContentId);
+                    builder.HtmlBody = builder.HtmlBody.Replace($"{{{item.Key}}}", image.ContentId);
                 }
 
                 messageBody = builder.ToMessageBody();
