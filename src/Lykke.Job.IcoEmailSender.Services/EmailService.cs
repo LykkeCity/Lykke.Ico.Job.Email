@@ -58,7 +58,7 @@ namespace Lykke.Job.IcoEmailSender.Services
             var payInBtcAddressQRCode = Convert.ToBase64String(QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
             var payInEthAddressQRCode = Convert.ToBase64String(QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
 
-            var body = _bodyInvestorConfirmation
+            var body = _bodyInvestorSummary
                 .Replace("{PayInBtcAddress}", message.PayInBtcAddress)
                 .Replace("{PayInBtcAddressQRCode}", payInBtcAddressQRCode)
                 .Replace("{PayInEthAddress}", message.PayInEthAddress)
@@ -72,7 +72,7 @@ namespace Lykke.Job.IcoEmailSender.Services
 
         public async Task SendEmail(InvestorKycRequestMessage message)
         {
-            var body = _bodyInvestorConfirmation
+            var body = _bodyInvestorKycRequest
                 .Replace("{KycId}", message.KycId);
 
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorKycRequest, body);
@@ -80,7 +80,7 @@ namespace Lykke.Job.IcoEmailSender.Services
 
         public async Task SendEmail(InvestorNewTransactionMessage message)
         {
-            var body = _bodyInvestorConfirmation
+            var body = _bodyInvestorNewTransaction
                 .Replace("{KycId}", message.Amount)
                 .Replace("{CurrencyType}", Enum.GetName(typeof(CurrencyType), message.CurrencyType))
                 .Replace("{Amount}", message.Amount);
