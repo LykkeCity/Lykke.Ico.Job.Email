@@ -1,4 +1,4 @@
-﻿using Lykke.Ico.Core.Contracts.Queues;
+﻿using Lykke.Ico.Core.Queues.Emails;
 using System.Threading.Tasks;
 
 namespace Lykke.Job.IcoEmailSender.Core.Services
@@ -6,8 +6,8 @@ namespace Lykke.Job.IcoEmailSender.Core.Services
     public interface IEmailService
     {
         Task SendEmail(InvestorConfirmationMessage message);
-        void SendEmail(InvestorSummaryMessage message);
-        void SendEmail(InvestorKycRequestMessage message);
-        void SendEmail(InvestorNewTransactionMessage message);
+        Task SendEmail(InvestorSummaryMessage message);
+        Task SendEmail(InvestorKycRequestMessage message);
+        Task SendEmail(InvestorNewTransactionMessage message);
     }
 }

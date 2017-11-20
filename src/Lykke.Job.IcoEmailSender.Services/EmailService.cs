@@ -3,9 +3,9 @@ using System;
 using Common.Log;
 using System.Threading.Tasks;
 using Lykke.Ico.Core;
-using Lykke.Ico.Core.Contracts;
 using System.Net;
-using Lykke.Ico.Core.Contracts.Queues;
+using Lykke.Ico.Core.Queues.Emails;
+using Lykke.Ico.Core.Helpers;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -28,7 +28,7 @@ namespace Lykke.Job.IcoEmailSender.Services
             _icoSiteUrl = icoSiteUrl;
 
             _bodyInvestorConfirmation = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorConfirmation);
-            //_bodyInvestorSummary = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorSummary);
+            _bodyInvestorSummary = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorSummary);
             //_bodyInvestorKycRequest = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorKycRequest);
             //_bodyInvestorNewTransaction = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorNewTransaction);
         }
@@ -53,11 +53,16 @@ namespace Lykke.Job.IcoEmailSender.Services
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorConfirmation, body);
         }
 
-        public async void SendEmail(InvestorSummaryMessage message)
+        public async Task SendEmail(InvestorSummaryMessage message)
         {
+            var payInBtcAddressQRCode = Convert.ToBase64String(QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
+            var payInEthAddressQRCode = Convert.ToBase64String(QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
+
             var body = _bodyInvestorConfirmation
                 .Replace("{PayInBtcAddress}", message.PayInBtcAddress)
+                .Replace("{PayInBtcAddressQRCode}", payInBtcAddressQRCode)
                 .Replace("{PayInEthAddress}", message.PayInEthAddress)
+                .Replace("{PayInEthAddressQRCode}", payInEthAddressQRCode)
                 .Replace("{RefundBtcAddress}", message.RefundBtcAddress)
                 .Replace("{RefundEthAddress}", message.RefundEthAddress)
                 .Replace("{TokenAddress}", message.TokenAddress);
@@ -65,7 +70,7 @@ namespace Lykke.Job.IcoEmailSender.Services
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorSummary, body);
         }
 
-        public async void SendEmail(InvestorKycRequestMessage message)
+        public async Task SendEmail(InvestorKycRequestMessage message)
         {
             var body = _bodyInvestorConfirmation
                 .Replace("{KycId}", message.KycId);
@@ -73,7 +78,7 @@ namespace Lykke.Job.IcoEmailSender.Services
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorKycRequest, body);
         }
 
-        public async void SendEmail(InvestorNewTransactionMessage message)
+        public async Task SendEmail(InvestorNewTransactionMessage message)
         {
             var body = _bodyInvestorConfirmation
                 .Replace("{KycId}", message.Amount)

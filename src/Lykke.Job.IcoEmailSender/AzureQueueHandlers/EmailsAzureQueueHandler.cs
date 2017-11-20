@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Lykke.JobTriggers.Triggers.Attributes;
 using Lykke.Ico.Core;
+using Lykke.Ico.Core.Queues.Emails;
+using Lykke.JobTriggers.Triggers.Attributes;
 using Lykke.Job.IcoEmailSender.Core.Services;
+using Common;
 using Common.Log;
-using Lykke.Ico.Core.Contracts.Queues;
 
 namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
 {
@@ -21,7 +22,15 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
         [QueueTrigger(Consts.Emails.Queues.InvestorConfirmation)]
         public async Task HandleEmailMessage(InvestorConfirmationMessage message)
         {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), $"Send InvestorConfirmation email to {message.EmailTo}");
+            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), $"Send InvestorConfirmationMessage email: {message.ToJson()}");
+
+            await _emailService.SendEmail(message);
+        }
+
+        [QueueTrigger(Consts.Emails.Queues.InvestorSummary)]
+        public async Task HandleEmailMessage(InvestorSummaryMessage message)
+        {
+            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), $"Send InvestorSummaryMessage email: {message.ToJson()}");
 
             await _emailService.SendEmail(message);
         }
