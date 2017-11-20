@@ -18,6 +18,8 @@ namespace Lykke.Job.IcoEmailSender.Services
         private readonly string _icoSiteUrl;
         private readonly string _bodyInvestorConfirmation;
         private readonly string _bodyInvestorSummary;
+        private readonly string _bodyInvestorSummaryRefundBtcSection;
+        private readonly string _bodyInvestorSummaryRefundEthSection;
         private readonly string _bodyInvestorKycRequest;
         private readonly string _bodyInvestorNewTransaction;
 
@@ -30,6 +32,8 @@ namespace Lykke.Job.IcoEmailSender.Services
 
             _bodyInvestorConfirmation = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorConfirmation);
             _bodyInvestorSummary = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorSummary);
+            _bodyInvestorSummaryRefundBtcSection = GetEmailBodyTemplate("investor-summary-refund-btc-section.html");
+            _bodyInvestorSummaryRefundEthSection = GetEmailBodyTemplate("investor-summary-refund-eth-section.html");
             //_bodyInvestorKycRequest = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorKycRequest);
             //_bodyInvestorNewTransaction = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorNewTransaction);
         }
@@ -57,13 +61,27 @@ namespace Lykke.Job.IcoEmailSender.Services
         public async Task SendEmail(InvestorSummaryMessage message)
         {
             var attachments = new Dictionary<string, byte[]>();
-            attachments.Add("PayInBtcAddressQRCode", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
-            attachments.Add("PayInEthAddressQRCode", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
+            attachments.Add("PayInBtcAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
+            attachments.Add("PayInEthAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
+
+            var bodyInvestorSummaryRefundBtcSection = _bodyInvestorSummaryRefundBtcSection;
+            if (string.IsNullOrEmpty(message.RefundBtcAddress))
+            {
+                bodyInvestorSummaryRefundBtcSection = "";
+            }
+
+            var bodyInvestorSummaryRefundEthSection = _bodyInvestorSummaryRefundEthSection;
+            if (string.IsNullOrEmpty(message.RefundEthAddress))
+            {
+                bodyInvestorSummaryRefundEthSection = "";
+            }
 
             var body = _bodyInvestorSummary
                 .Replace("{PayInBtcAddress}", message.PayInBtcAddress)
                 .Replace("{PayInEthAddress}", message.PayInEthAddress)
+                .Replace("{RefundBtcSection}", bodyInvestorSummaryRefundBtcSection)
                 .Replace("{RefundBtcAddress}", message.RefundBtcAddress)
+                .Replace("{RefundEthSection}", bodyInvestorSummaryRefundEthSection)
                 .Replace("{RefundEthAddress}", message.RefundEthAddress)
                 .Replace("{TokenAddress}", message.TokenAddress);
 
