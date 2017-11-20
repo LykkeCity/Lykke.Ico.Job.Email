@@ -6,6 +6,7 @@ using Lykke.Ico.Core;
 using System.Net;
 using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Helpers;
+using System.Collections.Generic;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -55,19 +56,18 @@ namespace Lykke.Job.IcoEmailSender.Services
 
         public async Task SendEmail(InvestorSummaryMessage message)
         {
-            var payInBtcAddressQRCode = Convert.ToBase64String(QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
-            var payInEthAddressQRCode = Convert.ToBase64String(QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
+            var attachments = new Dictionary<string, byte[]>();
+            attachments.Add("PayInBtcAddressQRCode", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
+            attachments.Add("PayInEthAddressQRCode", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
 
             var body = _bodyInvestorSummary
                 .Replace("{PayInBtcAddress}", message.PayInBtcAddress)
-                .Replace("{PayInBtcAddressQRCode}", payInBtcAddressQRCode)
                 .Replace("{PayInEthAddress}", message.PayInEthAddress)
-                .Replace("{PayInEthAddressQRCode}", payInEthAddressQRCode)
                 .Replace("{RefundBtcAddress}", message.RefundBtcAddress)
                 .Replace("{RefundEthAddress}", message.RefundEthAddress)
                 .Replace("{TokenAddress}", message.TokenAddress);
 
-            await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorSummary, body);
+            await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorSummary, body, attachments);
         }
 
         public async Task SendEmail(InvestorKycRequestMessage message)

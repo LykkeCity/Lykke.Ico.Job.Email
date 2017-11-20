@@ -6,6 +6,8 @@ using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using MimeKit.Utils;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -20,9 +22,29 @@ namespace Lykke.Job.IcoEmailSender.Services
             _settings = settings;
         }
 
-        public async Task Send(string to, string subject, string body)
+        public async Task Send(string to, string subject, string body, Dictionary<string, byte[]> attachments = null)
         {
-            var messageBody = new TextPart(TextFormat.Html) { Text = body };
+            MimeEntity messageBody = null;
+
+            if (attachments == null)
+            {
+                messageBody = new TextPart(TextFormat.Html) { Text = body };
+            }
+            else
+            {
+                var builder = new BodyBuilder();
+                builder.HtmlBody = body;
+
+                foreach (var item in attachments)
+                {
+                    var image = builder.LinkedResources.Add(item.Key, item.Value);
+                    image.ContentId = MimeUtils.GenerateMessageId();
+
+                    builder.HtmlBody = body.Replace($"{{{item.Key}}}", image.ContentId);
+                }
+
+                messageBody = builder.ToMessageBody();
+            }
 
             var emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress(_settings.DisplayName, _settings.From));
