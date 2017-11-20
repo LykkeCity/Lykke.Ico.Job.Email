@@ -41,6 +41,7 @@ namespace Lykke.Job.IcoEmailSender.Services
                 {
                     var image = builder.LinkedResources.Add(item.Key, item.Value);
                     image.ContentId = MimeUtils.GenerateMessageId();
+                    image.IsAttachment = false;
 
                     builder.HtmlBody = builder.HtmlBody.Replace($"{{{item.Key}}}", image.ContentId);
                 }
