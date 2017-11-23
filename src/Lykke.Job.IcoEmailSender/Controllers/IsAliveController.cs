@@ -60,23 +60,22 @@ namespace Lykke.Job.IcoEmailSender.Controllers
             });
         }
 
-        /// <summary>
-        /// Checks service is alive
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            _emailService.SendEmail(new Ico.Core.Queues.Emails.InvestorSummaryMessage
-            {
-                Attempts = 0,
-                EmailTo = "akrivoshapov@gmail.com",
-                PayInBtcAddress = "mmHTFBhVfQvSp19EanFF4kZsmc1y3VbX3R",
-                PayInEthAddress = "0x9ab53D99c0AB522994dEe8f57c22FCC9007bF02A",
-                TokenAddress = "0x84b9C6EAF93db2f7fbEFac2c07d49983d6c2d25E"
-            });
+        ///// <summary>
+        ///// Checks service is alive
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet("test")]
+        //public IActionResult Test()
+        //{
+        //    _emailService.SendEmail(new Ico.Core.Queues.Emails.InvestorSummaryMessage
+        //    {
+        //        EmailTo = "akrivoshapov@gmail.com",
+        //        PayInBtcAddress = "mmHTFBhVfQvSp19EanFF4kZsmc1y3VbX3R",
+        //        PayInEthAddress = "0x9ab53D99c0AB522994dEe8f57c22FCC9007bF02A",
+        //        TokenAddress = "0x84b9C6EAF93db2f7fbEFac2c07d49983d6c2d25E"
+        //    });
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }

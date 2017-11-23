@@ -8,6 +8,7 @@ using MimeKit.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using MimeKit.Utils;
+using System;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -59,10 +60,18 @@ namespace Lykke.Job.IcoEmailSender.Services
             {
                 client.LocalDomain = _settings.LocalDomain;
 
-                await client.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.Auto);
-                await client.AuthenticateAsync(_settings.Login, _settings.Password);
-                await client.SendAsync(emailMessage);
-                await client.DisconnectAsync(true);
+                try
+                {
+                    await client.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.Auto);
+                    await client.AuthenticateAsync(_settings.Login, _settings.Password);
+                    await client.SendAsync(emailMessage);
+                    await client.DisconnectAsync(true);
+                }
+                catch (Exception ex)
+                {
+                    await Task.Delay(500);
+                    throw ex;
+                }
             }
         }
     }
