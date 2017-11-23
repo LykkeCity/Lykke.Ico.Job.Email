@@ -7,6 +7,7 @@ using System.Net;
 using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Helpers;
 using System.Collections.Generic;
+using Lykke.Ico.Core.Repositories.EmailHistory;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -14,6 +15,8 @@ namespace Lykke.Job.IcoEmailSender.Services
     {
         private readonly ILog _log;
         private readonly ISmtpService _smtpService;
+        private readonly IEmailHistoryRepository _emailHistoryRepository;
+        private readonly int _maxAttempts = 3;
         private readonly string _contentUrl;
         private readonly string _icoSiteUrl;
         private readonly string _bodyInvestorConfirmation;
@@ -23,10 +26,12 @@ namespace Lykke.Job.IcoEmailSender.Services
         private readonly string _bodyInvestorKycRequest;
         private readonly string _bodyInvestorNewTransaction;
 
-        public EmailService(ILog log, ISmtpService smtpService, string contentUrl, string icoSiteUrl)
+        public EmailService(ILog log, ISmtpService smtpService, IEmailHistoryRepository emailHistoryRepository,
+            string contentUrl, string icoSiteUrl)
         {
             _log = log;
             _smtpService = smtpService;
+            _emailHistoryRepository = emailHistoryRepository;
             _contentUrl = contentUrl;
             _icoSiteUrl = icoSiteUrl;
 
@@ -52,10 +57,11 @@ namespace Lykke.Job.IcoEmailSender.Services
 
         public async Task SendEmail(InvestorConfirmationMessage message)
         {
+            var subject = Consts.Emails.Subjects.InvestorConfirmation;
             var body = _bodyInvestorConfirmation
                 .Replace("{ConfirmationLink}", $"{_icoSiteUrl}register/{message.ConfirmationToken}");
 
-            await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorConfirmation, body);
+            await SendInvestorEmail(message, subject, body);
         }
 
         public async Task SendEmail(InvestorSummaryMessage message)
@@ -76,6 +82,8 @@ namespace Lykke.Job.IcoEmailSender.Services
                 bodyInvestorSummaryRefundEthSection = "";
             }
 
+            var subject = Consts.Emails.Subjects.InvestorSummary;
+
             var body = _bodyInvestorSummary
                 .Replace("{PayInBtcAddress}", message.PayInBtcAddress)
                 .Replace("{PayInEthAddress}", message.PayInEthAddress)
@@ -85,7 +93,7 @@ namespace Lykke.Job.IcoEmailSender.Services
                 .Replace("{RefundEthAddress}", message.RefundEthAddress)
                 .Replace("{TokenAddress}", message.TokenAddress);
 
-            await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorSummary, body, attachments);
+            await SendInvestorEmail(message, subject, body, attachments);
         }
 
         public async Task SendEmail(InvestorKycRequestMessage message)
@@ -102,7 +110,30 @@ namespace Lykke.Job.IcoEmailSender.Services
                 .Replace("{TransactionLink}", message.TransactionLink)
                 .Replace("{Payment}", message.Payment);
 
-            await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorNewTransaction, body);
+            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNewTransaction, body);
+        }
+
+        private async Task SendInvestorEmail<T>(T message, string subject, string body, Dictionary<string, byte[]> attachments = null)
+            where T : IInvestorMessage
+        {
+            var typeName = message.GetType().Name;
+
+            try
+            {
+                await _smtpService.Send(message.EmailTo, subject, body, attachments);
+            }
+            catch (Exception ex)
+            {
+                await _log.WriteErrorAsync(
+                        nameof(EmailService),
+                        nameof(SendEmail),
+                        $"Failed to send {typeName}: '{message.ToString()}'",
+                        ex);
+
+                throw ex;
+            }
+
+            await _emailHistoryRepository.SaveAsync(typeName, message.EmailTo, subject, body);
         }
     }
 }

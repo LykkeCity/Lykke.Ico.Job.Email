@@ -5,6 +5,7 @@ using Lykke.Job.IcoEmailSender.Core.Settings.JobSettings;
 using Lykke.Job.IcoEmailSender.Services;
 using Lykke.SettingsReader;
 using Lykke.JobTriggers.Extenstions;
+using Lykke.Ico.Core.Repositories.EmailHistory;
 
 namespace Lykke.Job.IcoEmailSender.Modules
 {
@@ -23,6 +24,8 @@ namespace Lykke.Job.IcoEmailSender.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
+            var connectionStringManager = _dbSettingsManager.ConnectionString(x => x.IcoDataConnString);
+
             builder.RegisterInstance(_log)
                 .As<ILog>()
                 .SingleInstance();
@@ -38,6 +41,11 @@ namespace Lykke.Job.IcoEmailSender.Modules
                 .As<IShutdownManager>();
 
             RegisterAzureQueueHandlers(builder);
+
+            builder.RegisterType<EmailHistoryRepository>()
+                .As<IEmailHistoryRepository>()
+                .WithParameter(TypedParameter.From(connectionStringManager))
+                .SingleInstance();
 
             builder.RegisterType<SmtpService>()
                 .As<ISmtpService>()
