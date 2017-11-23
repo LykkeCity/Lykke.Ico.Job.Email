@@ -69,7 +69,6 @@ namespace Lykke.Job.IcoEmailSender.Controllers
         {
             _emailService.SendEmail(new Ico.Core.Queues.Emails.InvestorSummaryMessage
             {
-                Attempts = 0,
                 EmailTo = "akrivoshapov@gmail.com",
                 PayInBtcAddress = "mmHTFBhVfQvSp19EanFF4kZsmc1y3VbX3R",
                 PayInEthAddress = "0x9ab53D99c0AB522994dEe8f57c22FCC9007bF02A",

@@ -35,7 +35,7 @@ namespace Lykke.Job.IcoEmailSender.Services
             _bodyInvestorSummaryRefundBtcSection = GetEmailBodyTemplate("investor-summary-refund-btc-section.html");
             _bodyInvestorSummaryRefundEthSection = GetEmailBodyTemplate("investor-summary-refund-eth-section.html");
             //_bodyInvestorKycRequest = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorKycRequest);
-            //_bodyInvestorNewTransaction = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorNewTransaction);
+            _bodyInvestorNewTransaction = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorNewTransaction);
         }
 
         private string GetEmailBodyTemplate(string templateFileName)
@@ -99,9 +99,8 @@ namespace Lykke.Job.IcoEmailSender.Services
         public async Task SendEmail(InvestorNewTransactionMessage message)
         {
             var body = _bodyInvestorNewTransaction
-                .Replace("{KycId}", message.Amount)
-                .Replace("{CurrencyType}", Enum.GetName(typeof(CurrencyType), message.CurrencyType))
-                .Replace("{Amount}", message.Amount);
+                .Replace("{TransactionLink}", message.TransactionLink)
+                .Replace("{Payment}", message.Payment);
 
             await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorNewTransaction, body);
         }
