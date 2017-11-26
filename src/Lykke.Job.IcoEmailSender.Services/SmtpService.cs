@@ -62,7 +62,7 @@ namespace Lykke.Job.IcoEmailSender.Services
 
                 try
                 {
-                    await client.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.Auto).ConfigureAwait(false);
+                    await client.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.None).ConfigureAwait(false);
                     await client.AuthenticateAsync(_settings.Login, _settings.Password).ConfigureAwait(false);
                     await client.SendAsync(emailMessage).ConfigureAwait(false);
                     await client.DisconnectAsync(true).ConfigureAwait(false);
