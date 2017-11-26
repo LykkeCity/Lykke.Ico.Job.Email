@@ -59,7 +59,7 @@ namespace Lykke.Job.IcoEmailSender.Services
         {
             var subject = Consts.Emails.Subjects.InvestorConfirmation;
             var body = _bodyInvestorConfirmation
-                .Replace("{ConfirmationLink}", $"{_icoSiteUrl}register/{message.ConfirmationToken}");
+                .Replace("{ConfirmationLink}", $"{_icoSiteUrl}participate/verify/{message.ConfirmationToken}");
 
             await SendInvestorEmail(message, subject, body);
         }
