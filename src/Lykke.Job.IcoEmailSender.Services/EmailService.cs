@@ -7,7 +7,7 @@ using System.Net;
 using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Helpers;
 using System.Collections.Generic;
-using Lykke.Ico.Core.Repositories.EmailHistory;
+using Lykke.Ico.Core.Repositories.InvestorEmail;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -15,32 +15,28 @@ namespace Lykke.Job.IcoEmailSender.Services
     {
         private readonly ILog _log;
         private readonly ISmtpService _smtpService;
-        private readonly IEmailHistoryRepository _emailHistoryRepository;
+        private readonly IInvestorEmailRepository _investorEmailRepository;
         private readonly int _maxAttempts = 3;
         private readonly string _contentUrl;
-        private readonly string _icoSiteUrl;
         private readonly string _bodyInvestorConfirmation;
         private readonly string _bodyInvestorSummary;
-        private readonly string _bodyInvestorSummaryRefundBtcSection;
-        private readonly string _bodyInvestorSummaryRefundEthSection;
         private readonly string _bodyInvestorKycRequest;
         private readonly string _bodyInvestorNewTransaction;
+        private readonly string _bodyInvestorNeedMoreInvestment;
 
-        public EmailService(ILog log, ISmtpService smtpService, IEmailHistoryRepository emailHistoryRepository,
-            string contentUrl, string icoSiteUrl)
+        public EmailService(ILog log, ISmtpService smtpService, IInvestorEmailRepository 
+            investorEmailRepository, string contentUrl)
         {
             _log = log;
             _smtpService = smtpService;
-            _emailHistoryRepository = emailHistoryRepository;
+            _investorEmailRepository = investorEmailRepository;
             _contentUrl = contentUrl;
-            _icoSiteUrl = icoSiteUrl;
 
             _bodyInvestorConfirmation = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorConfirmation);
             _bodyInvestorSummary = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorSummary);
-            _bodyInvestorSummaryRefundBtcSection = GetEmailBodyTemplate("investor-summary-refund-btc-section.html");
-            _bodyInvestorSummaryRefundEthSection = GetEmailBodyTemplate("investor-summary-refund-eth-section.html");
-            //_bodyInvestorKycRequest = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorKycRequest);
+            _bodyInvestorKycRequest = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorKycRequest);
             _bodyInvestorNewTransaction = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorNewTransaction);
+            _bodyInvestorNeedMoreInvestment = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorNeedMoreInvestment);
         }
 
         private string GetEmailBodyTemplate(string templateFileName)
@@ -59,7 +55,7 @@ namespace Lykke.Job.IcoEmailSender.Services
         {
             var subject = Consts.Emails.Subjects.InvestorConfirmation;
             var body = _bodyInvestorConfirmation
-                .Replace("{ConfirmationLink}", $"{_icoSiteUrl}participate/verify/{message.ConfirmationToken}");
+                .Replace("{ConfirmationLink}", message.ConfirmationLink);
 
             await SendInvestorEmail(message, subject, body);
         }
@@ -70,38 +66,25 @@ namespace Lykke.Job.IcoEmailSender.Services
             attachments.Add("PayInBtcAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
             attachments.Add("PayInEthAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
 
-            var bodyInvestorSummaryRefundBtcSection = _bodyInvestorSummaryRefundBtcSection;
-            if (string.IsNullOrEmpty(message.RefundBtcAddress))
-            {
-                bodyInvestorSummaryRefundBtcSection = "";
-            }
-
-            var bodyInvestorSummaryRefundEthSection = _bodyInvestorSummaryRefundEthSection;
-            if (string.IsNullOrEmpty(message.RefundEthAddress))
-            {
-                bodyInvestorSummaryRefundEthSection = "";
-            }
-
-            var subject = Consts.Emails.Subjects.InvestorSummary;
-
             var body = _bodyInvestorSummary
+                .Replace("{LinkBtcAddress}", message.LinkBtcAddress)
+                .Replace("{LinkEthAddress}", message.LinkEthAddress)
                 .Replace("{PayInBtcAddress}", message.PayInBtcAddress)
                 .Replace("{PayInEthAddress}", message.PayInEthAddress)
-                .Replace("{RefundBtcSection}", bodyInvestorSummaryRefundBtcSection)
                 .Replace("{RefundBtcAddress}", message.RefundBtcAddress)
-                .Replace("{RefundEthSection}", bodyInvestorSummaryRefundEthSection)
                 .Replace("{RefundEthAddress}", message.RefundEthAddress)
                 .Replace("{TokenAddress}", message.TokenAddress);
 
-            await SendInvestorEmail(message, subject, body, attachments);
-        }
+            if (string.IsNullOrEmpty(message.RefundBtcAddress))
+            {
+                RemoveSection(body, "RefundBtcAddress");
+            }
+            if (string.IsNullOrEmpty(message.RefundEthAddress))
+            {
+                RemoveSection(body, "RefundBtcAddress");
+            }
 
-        public async Task SendEmail(InvestorKycRequestMessage message)
-        {
-            var body = _bodyInvestorKycRequest
-                .Replace("{KycId}", message.KycId);
-
-            await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorKycRequest, body);
+            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorSummary, body, attachments);
         }
 
         public async Task SendEmail(InvestorNewTransactionMessage message)
@@ -111,6 +94,23 @@ namespace Lykke.Job.IcoEmailSender.Services
                 .Replace("{Payment}", message.Payment);
 
             await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNewTransaction, body);
+        }
+
+        public async Task SendEmail(InvestorNeedMoreInvestmentMessage message)
+        {
+            var body = _bodyInvestorNeedMoreInvestment
+                .Replace("{InvestedAmount}", message.InvestedAmount.ToString())
+                .Replace("{MinAmount}", message.MinAmount.ToString());
+
+            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNewTransaction, body);
+        }
+
+        public async Task SendEmail(InvestorKycRequestMessage message)
+        {
+            var body = _bodyInvestorKycRequest
+                .Replace("{KycLink}", message.KycLink);
+
+            await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorKycRequest, body);
         }
 
         private async Task SendInvestorEmail<T>(T message, string subject, string body, Dictionary<string, byte[]> attachments = null)
@@ -133,7 +133,18 @@ namespace Lykke.Job.IcoEmailSender.Services
                 throw ex;
             }
 
-            await _emailHistoryRepository.SaveAsync(typeName, message.EmailTo, subject, body);
+            await _investorEmailRepository.SaveAsync(typeName, message.EmailTo, subject, body);
+        }
+
+        private string RemoveSection(string body, string section)
+        {
+            var start = $"<!--{section}-->";
+            var end = $"<!--end:{section}-->";
+
+            var index = _bodyInvestorSummary.IndexOf(start);
+            var count = _bodyInvestorSummary.IndexOf(end) + end.Length;
+
+            return _bodyInvestorSummary.Remove(index, count);
         }
     }
 }

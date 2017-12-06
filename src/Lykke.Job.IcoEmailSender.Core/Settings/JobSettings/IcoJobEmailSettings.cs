@@ -6,6 +6,5 @@
         public AzureQueueSettings AzureQueue { get; set; }
         public SmtpSettings Smtp { get; set; }
         public string ContentUrl { get; set; }
-        public string IcoSiteUrl { get; set; }
     }
 }

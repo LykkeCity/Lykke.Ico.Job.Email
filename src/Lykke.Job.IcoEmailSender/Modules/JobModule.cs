@@ -5,7 +5,7 @@ using Lykke.Job.IcoEmailSender.Core.Settings.JobSettings;
 using Lykke.Job.IcoEmailSender.Services;
 using Lykke.SettingsReader;
 using Lykke.JobTriggers.Extenstions;
-using Lykke.Ico.Core.Repositories.EmailHistory;
+using Lykke.Ico.Core.Repositories.InvestorEmail;
 
 namespace Lykke.Job.IcoEmailSender.Modules
 {
@@ -42,8 +42,8 @@ namespace Lykke.Job.IcoEmailSender.Modules
 
             RegisterAzureQueueHandlers(builder);
 
-            builder.RegisterType<EmailHistoryRepository>()
-                .As<IEmailHistoryRepository>()
+            builder.RegisterType<InvestorEmailRepository>()
+                .As<IInvestorEmailRepository>()
                 .WithParameter(TypedParameter.From(connectionStringManager))
                 .SingleInstance();
 
@@ -55,8 +55,7 @@ namespace Lykke.Job.IcoEmailSender.Modules
             builder.RegisterType<EmailService>()
                 .As<IEmailService>()
                 .SingleInstance()
-                .WithParameter("contentUrl", _settings.ContentUrl)
-                .WithParameter("icoSiteUrl", _settings.IcoSiteUrl);
+                .WithParameter("contentUrl", _settings.ContentUrl);
         }
 
         private void RegisterAzureQueueHandlers(ContainerBuilder builder)

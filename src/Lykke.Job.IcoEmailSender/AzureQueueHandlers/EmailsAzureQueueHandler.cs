@@ -22,7 +22,8 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
         [QueueTrigger(Consts.Emails.Queues.InvestorConfirmation)]
         public async Task HandleEmailMessage(InvestorConfirmationMessage message)
         {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), $"Send InvestorConfirmationMessage email: {message.ToJson()}");
+            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorConfirmationMessage),
+                $"Message: {message.ToJson()}");
 
             await _emailService.SendEmail(message);
         }
@@ -30,7 +31,8 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
         [QueueTrigger(Consts.Emails.Queues.InvestorSummary)]
         public async Task HandleEmailMessage(InvestorSummaryMessage message)
         {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), $"Send InvestorSummaryMessage email: {message.ToJson()}");
+            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorSummaryMessage),
+                $"Message: {message.ToJson()}");
 
             await _emailService.SendEmail(message);
         }
@@ -38,10 +40,28 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
         [QueueTrigger(Consts.Emails.Queues.InvestorNewTransaction)]
         public async Task HandleEmailMessage(InvestorNewTransactionMessage message)
         {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), $"Send InvestorNewTransactionMessage email: {message.ToJson()}");
+            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorNewTransactionMessage),
+                $"Message: {message.ToJson()}");
 
             await _emailService.SendEmail(message);
         }
 
+        [QueueTrigger(Consts.Emails.Queues.InvestorNeedMoreInvestment)]
+        public async Task HandleEmailMessage(InvestorNeedMoreInvestmentMessage message)
+        {
+            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorNeedMoreInvestmentMessage),
+                $"Message: {message.ToJson()}");
+
+            await _emailService.SendEmail(message);
+        }
+
+        [QueueTrigger(Consts.Emails.Queues.InvestorKycRequest)]
+        public async Task HandleEmailMessage(InvestorKycRequestMessage message)
+        {
+            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorKycRequestMessage),
+                $"Message: {message.ToJson()}");
+
+            await _emailService.SendEmail(message);
+        }
     }
 }
