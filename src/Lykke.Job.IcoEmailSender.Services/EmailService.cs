@@ -102,7 +102,7 @@ namespace Lykke.Job.IcoEmailSender.Services
                 .Replace("{InvestedAmount}", message.InvestedAmount.ToString())
                 .Replace("{MinAmount}", message.MinAmount.ToString());
 
-            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNewTransaction, body);
+            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNeedMoreInvestment, body);
         }
 
         public async Task SendEmail(InvestorKycRequestMessage message)
