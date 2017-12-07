@@ -93,6 +93,11 @@ namespace Lykke.Job.IcoEmailSender.Services
                 .Replace("{TransactionLink}", message.TransactionLink)
                 .Replace("{Payment}", message.Payment);
 
+            if (string.IsNullOrEmpty(message.TransactionLink))
+            {
+                RemoveSection(body, "TransactionLink");
+            }
+
             await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNewTransaction, body);
         }
 
