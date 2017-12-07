@@ -16,7 +16,6 @@ namespace Lykke.Job.IcoEmailSender.Services
         private readonly ILog _log;
         private readonly ISmtpService _smtpService;
         private readonly IInvestorEmailRepository _investorEmailRepository;
-        private readonly int _maxAttempts = 3;
         private readonly string _contentUrl;
         private readonly string _bodyInvestorConfirmation;
         private readonly string _bodyInvestorSummary;
@@ -77,11 +76,11 @@ namespace Lykke.Job.IcoEmailSender.Services
 
             if (string.IsNullOrEmpty(message.RefundBtcAddress))
             {
-                RemoveSection(body, "RefundBtcAddress");
+                await RemoveSection(body, "RefundBtcAddress");
             }
             if (string.IsNullOrEmpty(message.RefundEthAddress))
             {
-                RemoveSection(body, "RefundBtcAddress");
+                await RemoveSection(body, "RefundBtcAddress");
             }
 
             await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorSummary, body, attachments);
@@ -95,7 +94,7 @@ namespace Lykke.Job.IcoEmailSender.Services
 
             if (string.IsNullOrEmpty(message.TransactionLink))
             {
-                RemoveSection(body, "TransactionLink");
+                await  RemoveSection(body, "TransactionLink");
             }
 
             await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNewTransaction, body);
@@ -141,15 +140,28 @@ namespace Lykke.Job.IcoEmailSender.Services
             await _investorEmailRepository.SaveAsync(typeName, message.EmailTo, subject, body);
         }
 
-        private string RemoveSection(string body, string section)
+        private async Task<string> RemoveSection(string body, string section)
         {
-            var start = $"<!--{section}-->";
-            var end = $"<!--end:{section}-->";
+            try
+            {
+                var start = $"<!--{section}-->";
+                var end = $"<!--end:{section}-->";
 
-            var index = _bodyInvestorSummary.IndexOf(start);
-            var count = _bodyInvestorSummary.IndexOf(end) + end.Length;
+                var index = body.IndexOf(start);
+                var count = body.IndexOf(end) + end.Length;
 
-            return _bodyInvestorSummary.Remove(index, count);
+                return body.Remove(index, count);
+            }
+            catch (Exception ex)
+            {
+                await _log.WriteErrorAsync(
+                        nameof(EmailService),
+                        nameof(SendEmail),
+                        $"Failed to remove section: '{section}'",
+                        ex);
+            }
+
+            return body;
         }
     }
 }
