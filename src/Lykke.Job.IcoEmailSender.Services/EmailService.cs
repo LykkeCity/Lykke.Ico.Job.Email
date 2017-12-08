@@ -8,6 +8,7 @@ using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Helpers;
 using System.Collections.Generic;
 using Lykke.Ico.Core.Repositories.InvestorEmail;
+using Common;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -124,7 +125,12 @@ namespace Lykke.Job.IcoEmailSender.Services
 
             try
             {
+                var start = DateTime.Now;
+
                 await _smtpService.Send(message.EmailTo, subject, body, attachments);
+
+                await _log.WriteInfoAsync(nameof(EmailService), nameof(SendInvestorEmail),
+                    $"{(DateTime.Now - start).TotalMilliseconds} msecs to send: {message.ToJson()}");
             }
             catch (Exception ex)
             {
