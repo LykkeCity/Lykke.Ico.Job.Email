@@ -154,7 +154,7 @@ namespace Lykke.Job.IcoEmailSender.Services
                 var end = $"<!--end:{section}-->";
 
                 var index = body.IndexOf(start);
-                var count = body.IndexOf(end) + end.Length;
+                var count = (body.IndexOf(end) + end.Length) - index;
 
                 return body.Remove(index, count);
             }
