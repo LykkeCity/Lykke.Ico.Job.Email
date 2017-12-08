@@ -1,14 +1,13 @@
-﻿using Lykke.Job.IcoEmailSender.Core.Services;
-using System;
-using Common.Log;
-using System.Threading.Tasks;
-using Lykke.Ico.Core;
+﻿using System;
 using System.Net;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Common.Log;
+using Lykke.Ico.Core;
 using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Helpers;
-using System.Collections.Generic;
 using Lykke.Ico.Core.Repositories.InvestorEmail;
-using Common;
+using Lykke.Job.IcoEmailSender.Core.Services;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -62,9 +61,11 @@ namespace Lykke.Job.IcoEmailSender.Services
 
         public async Task SendEmail(InvestorSummaryMessage message)
         {
-            var attachments = new Dictionary<string, byte[]>();
-            attachments.Add("PayInBtcAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
-            attachments.Add("PayInEthAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress));
+            var attachments = new Dictionary<string, byte[]>
+            {
+                { "PayInBtcAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress) },
+                { "PayInEthAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress) }
+            };
 
             var body = _bodyInvestorSummary
                 .Replace("{LinkBtcAddress}", message.LinkBtcAddress)
@@ -125,12 +126,7 @@ namespace Lykke.Job.IcoEmailSender.Services
 
             try
             {
-                var start = DateTime.Now;
-
                 await _smtpService.Send(message.EmailTo, subject, body, attachments);
-
-                await _log.WriteInfoAsync(nameof(EmailService), nameof(SendInvestorEmail),
-                    $"{(DateTime.Now - start).TotalMilliseconds} msecs to send: {message.ToJson()}");
             }
             catch (Exception ex)
             {
