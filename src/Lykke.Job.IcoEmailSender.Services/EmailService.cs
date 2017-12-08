@@ -8,6 +8,7 @@ using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Helpers;
 using Lykke.Ico.Core.Repositories.InvestorEmail;
 using Lykke.Job.IcoEmailSender.Core.Services;
+using Lykke.Job.IcoEmailSender.Core;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -78,11 +79,11 @@ namespace Lykke.Job.IcoEmailSender.Services
 
             if (string.IsNullOrEmpty(message.RefundBtcAddress))
             {
-                await RemoveSection(body, "RefundBtcAddress");
+                body = await RemoveSection(body, "RefundBtcAddress");
             }
             if (string.IsNullOrEmpty(message.RefundEthAddress))
             {
-                await RemoveSection(body, "RefundBtcAddress");
+                body = await RemoveSection(body, "RefundBtcAddress");
             }
 
             await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorSummary, body, attachments);
@@ -96,7 +97,7 @@ namespace Lykke.Job.IcoEmailSender.Services
 
             if (string.IsNullOrEmpty(message.TransactionLink))
             {
-                await  RemoveSection(body, "TransactionLink");
+                body = await RemoveSection(body, "TransactionLink");
             }
 
             await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNewTransaction, body);
@@ -146,13 +147,7 @@ namespace Lykke.Job.IcoEmailSender.Services
         {
             try
             {
-                var start = $"<!--{section}-->";
-                var end = $"<!--end:{section}-->";
-
-                var index = body.IndexOf(start);
-                var count = (body.IndexOf(end) + end.Length) - index;
-
-                return body.Remove(index, count);
+                return Utils.RemoveSection(body, section);
             }
             catch (Exception ex)
             {
