@@ -114,7 +114,7 @@ namespace Lykke.Job.IcoEmailSender.Services
             var body = _bodyInvestorKycRequest
                 .Replace("{KycLink}", message.KycLink);
 
-            await _smtpService.Send(message.EmailTo, Consts.Emails.Subjects.InvestorKycRequest, body);
+            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorKycRequest, body);
         }
 
         private async Task SendInvestorEmail<T>(T message, string subject, string body, Dictionary<string, byte[]> attachments = null)
@@ -156,8 +156,8 @@ namespace Lykke.Job.IcoEmailSender.Services
             {
                 await _log.WriteErrorAsync(
                         nameof(EmailService),
-                        nameof(SendEmail),
-                        $"Failed to remove section: '{section}'",
+                        nameof(RemoveSection),
+                        $"Failed to remove section: '{section}'. {Environment.NewLine}Body: {Environment.NewLine}{body}",
                         ex);
             }
 
