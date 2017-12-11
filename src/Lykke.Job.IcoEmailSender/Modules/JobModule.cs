@@ -6,6 +6,8 @@ using Lykke.Job.IcoEmailSender.Services;
 using Lykke.SettingsReader;
 using Lykke.JobTriggers.Extenstions;
 using Lykke.Ico.Core.Repositories.InvestorEmail;
+using System.IO;
+using RazorLight;
 
 namespace Lykke.Job.IcoEmailSender.Modules
 {
@@ -14,12 +16,14 @@ namespace Lykke.Job.IcoEmailSender.Modules
         private readonly IcoEmailSenderSettings _settings;
         private readonly IReloadingManager<DbSettings> _dbSettingsManager;
         private readonly ILog _log;
+        private readonly string _contentRootPath;
 
-        public JobModule(IcoEmailSenderSettings settings, IReloadingManager<DbSettings> dbSettingsManager, ILog log)
+        public JobModule(IcoEmailSenderSettings settings, IReloadingManager<DbSettings> dbSettingsManager, ILog log, string contentRootPath)
         {
             _settings = settings;
             _log = log;
             _dbSettingsManager = dbSettingsManager;
+            _contentRootPath = contentRootPath;
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -56,6 +60,13 @@ namespace Lykke.Job.IcoEmailSender.Modules
                 .As<IEmailService>()
                 .SingleInstance()
                 .WithParameter("contentUrl", _settings.ContentUrl);
+
+            builder.RegisterInstance(new EngineFactory().ForFileSystem(Path.Combine(_contentRootPath, "Templates")))
+                .As<IRazorLightEngine>();
+
+            builder.RegisterType<ViewRenderService>()
+                .As<IViewRenderService>()
+                .SingleInstance();
         }
 
         private void RegisterAzureQueueHandlers(ContainerBuilder builder)

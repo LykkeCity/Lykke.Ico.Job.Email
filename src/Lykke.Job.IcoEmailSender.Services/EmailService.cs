@@ -17,6 +17,7 @@ namespace Lykke.Job.IcoEmailSender.Services
         private readonly ILog _log;
         private readonly ISmtpService _smtpService;
         private readonly IInvestorEmailRepository _investorEmailRepository;
+        private readonly IViewRenderService _viewRenderService;
         private readonly string _contentUrl;
         private readonly string _bodyInvestorConfirmation;
         private readonly string _bodyInvestorSummary;
@@ -25,11 +26,12 @@ namespace Lykke.Job.IcoEmailSender.Services
         private readonly string _bodyInvestorNeedMoreInvestment;
 
         public EmailService(ILog log, ISmtpService smtpService, IInvestorEmailRepository 
-            investorEmailRepository, string contentUrl)
+            investorEmailRepository, string contentUrl, IViewRenderService viewRenderService)
         {
             _log = log;
             _smtpService = smtpService;
             _investorEmailRepository = investorEmailRepository;
+            _viewRenderService = viewRenderService;
             _contentUrl = contentUrl;
 
             _bodyInvestorConfirmation = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorConfirmation);
@@ -54,8 +56,8 @@ namespace Lykke.Job.IcoEmailSender.Services
         public async Task SendEmail(InvestorConfirmationMessage message)
         {
             var subject = Consts.Emails.Subjects.InvestorConfirmation;
-            var body = _bodyInvestorConfirmation
-                .Replace("{ConfirmationLink}", message.ConfirmationLink);
+
+            var body = await _viewRenderService.Render(Consts.Emails.BodyTemplates.InvestorConfirmation.Replace(".html", ""), message);
 
             await SendInvestorEmail(message, subject, body);
         }

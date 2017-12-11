@@ -62,7 +62,7 @@ namespace Lykke.Job.IcoEmailSender
 
                 Log = CreateLogWithSlack(services, appSettings);
 
-                builder.RegisterModule(new JobModule(appSettings.CurrentValue.IcoEmailSenderJob, appSettings.Nested(x => x.IcoEmailSenderJob.Db), Log));
+                builder.RegisterModule(new JobModule(appSettings.CurrentValue.IcoEmailSenderJob, appSettings.Nested(x => x.IcoEmailSenderJob.Db), Log, Environment.ContentRootPath));
 
                 builder.Populate(services);
 
