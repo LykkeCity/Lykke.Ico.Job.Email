@@ -8,8 +8,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Templates\investor-confirmation.cshtml" />
+    <None Remove="Templates\investor-kyc-request.cshtml" />
+    <None Remove="Templates\investor-layout.cshtml" />
+    <None Remove="Templates\investor-need-more-investment.cshtml" />
+    <None Remove="Templates\investor-new-transaction.cshtml" />
+    <None Remove="Templates\investor-summary.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\investor-confirmation.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\investor-kyc-request.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\investor-layout.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\investor-need-more-investment.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\investor-new-transaction.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\investor-summary.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
