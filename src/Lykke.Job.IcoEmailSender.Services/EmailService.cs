@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Ico.Core;
-using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Helpers;
+using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Repositories.InvestorEmail;
-using Lykke.Job.IcoEmailSender.Core.Services;
 using Lykke.Job.IcoEmailSender.Core;
+using Lykke.Job.IcoEmailSender.Core.Services;
 
 namespace Lykke.Job.IcoEmailSender.Services
 {
@@ -17,109 +16,60 @@ namespace Lykke.Job.IcoEmailSender.Services
         private readonly ILog _log;
         private readonly ISmtpService _smtpService;
         private readonly IInvestorEmailRepository _investorEmailRepository;
-        private readonly IViewRenderService _viewRenderService;
-        private readonly string _contentUrl;
-        private readonly string _bodyInvestorConfirmation;
-        private readonly string _bodyInvestorSummary;
-        private readonly string _bodyInvestorKycRequest;
-        private readonly string _bodyInvestorNewTransaction;
-        private readonly string _bodyInvestorNeedMoreInvestment;
+        private readonly IRazorRenderService _razorRenderService;
 
         public EmailService(ILog log, ISmtpService smtpService, IInvestorEmailRepository 
-            investorEmailRepository, string contentUrl, IViewRenderService viewRenderService)
+            investorEmailRepository, IRazorRenderService razorRenderService)
         {
             _log = log;
             _smtpService = smtpService;
             _investorEmailRepository = investorEmailRepository;
-            _viewRenderService = viewRenderService;
-            _contentUrl = contentUrl;
-
-            _bodyInvestorConfirmation = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorConfirmation);
-            _bodyInvestorSummary = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorSummary);
-            _bodyInvestorKycRequest = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorKycRequest);
-            _bodyInvestorNewTransaction = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorNewTransaction);
-            _bodyInvestorNeedMoreInvestment = GetEmailBodyTemplate(Consts.Emails.BodyTemplates.InvestorNeedMoreInvestment);
-        }
-
-        private string GetEmailBodyTemplate(string templateFileName)
-        {
-            var url = $"{_contentUrl}{templateFileName}";
-
-            _log.WriteInfoAsync(nameof(EmailService), nameof(GetEmailBodyTemplate), $"Get content from {url}").Wait();
-
-            using (var client = new WebClient())
-            {
-                return client.DownloadString(url);
-            }
+            _razorRenderService = razorRenderService;
         }
 
         public async Task SendEmail(InvestorConfirmationMessage message)
         {
             var subject = Consts.Emails.Subjects.InvestorConfirmation;
-
-            var body = await _viewRenderService.Render(Consts.Emails.BodyTemplates.InvestorConfirmation.Replace(".html", ""), message);
+            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorConfirmation, message);
 
             await SendInvestorEmail(message, subject, body);
         }
 
         public async Task SendEmail(InvestorSummaryMessage message)
         {
+            var subject = Consts.Emails.Subjects.InvestorSummary;
+            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorSummary, message);
             var attachments = new Dictionary<string, byte[]>
             {
                 { "PayInBtcAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress) },
                 { "PayInEthAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress) }
             };
 
-            var body = _bodyInvestorSummary
-                .Replace("{LinkBtcAddress}", message.LinkBtcAddress)
-                .Replace("{LinkEthAddress}", message.LinkEthAddress)
-                .Replace("{PayInBtcAddress}", message.PayInBtcAddress)
-                .Replace("{PayInEthAddress}", message.PayInEthAddress)
-                .Replace("{RefundBtcAddress}", message.RefundBtcAddress)
-                .Replace("{RefundEthAddress}", message.RefundEthAddress)
-                .Replace("{TokenAddress}", message.TokenAddress);
-
-            if (string.IsNullOrEmpty(message.RefundBtcAddress))
-            {
-                body = await RemoveSection(body, "RefundBtcAddress");
-            }
-            if (string.IsNullOrEmpty(message.RefundEthAddress))
-            {
-                body = await RemoveSection(body, "RefundBtcAddress");
-            }
-
-            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorSummary, body, attachments);
+            await SendInvestorEmail(message, subject, body, attachments);
         }
 
         public async Task SendEmail(InvestorNewTransactionMessage message)
         {
-            var body = _bodyInvestorNewTransaction
-                .Replace("{TransactionLink}", message.TransactionLink)
-                .Replace("{Payment}", message.Payment);
+            var subject = Consts.Emails.Subjects.InvestorNewTransaction;
+            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorNewTransaction, message);
 
-            if (string.IsNullOrEmpty(message.TransactionLink))
-            {
-                body = await RemoveSection(body, "TransactionLink");
-            }
-
-            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNewTransaction, body);
+            await SendInvestorEmail(message, subject, body);
         }
 
         public async Task SendEmail(InvestorNeedMoreInvestmentMessage message)
         {
-            var body = _bodyInvestorNeedMoreInvestment
-                .Replace("{InvestedAmount}", message.InvestedAmount.ToString())
-                .Replace("{MinAmount}", message.MinAmount.ToString());
+            var subject = Consts.Emails.Subjects.InvestorNeedMoreInvestment;
+            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorNeedMoreInvestment, message);
 
-            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorNeedMoreInvestment, body);
+            await SendInvestorEmail(message, subject, body);
         }
 
         public async Task SendEmail(InvestorKycRequestMessage message)
         {
-            var body = _bodyInvestorKycRequest
-                .Replace("{KycLink}", message.KycLink);
+            var subject = Consts.Emails.Subjects.InvestorKycRequest;
+            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorKycRequest, message);
 
-            await SendInvestorEmail(message, Consts.Emails.Subjects.InvestorKycRequest, body);
+            await SendInvestorEmail(message, subject, body);
         }
 
         private async Task SendInvestorEmail<T>(T message, string subject, string body, Dictionary<string, byte[]> attachments = null)

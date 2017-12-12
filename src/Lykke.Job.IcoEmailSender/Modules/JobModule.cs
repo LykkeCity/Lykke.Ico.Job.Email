@@ -1,12 +1,12 @@
-﻿using Autofac;
+﻿using System.IO;
+using Autofac;
 using Common.Log;
+using Lykke.Ico.Core.Repositories.InvestorEmail;
 using Lykke.Job.IcoEmailSender.Core.Services;
 using Lykke.Job.IcoEmailSender.Core.Settings.JobSettings;
 using Lykke.Job.IcoEmailSender.Services;
-using Lykke.SettingsReader;
 using Lykke.JobTriggers.Extenstions;
-using Lykke.Ico.Core.Repositories.InvestorEmail;
-using System.IO;
+using Lykke.SettingsReader;
 using RazorLight;
 
 namespace Lykke.Job.IcoEmailSender.Modules
@@ -58,14 +58,13 @@ namespace Lykke.Job.IcoEmailSender.Modules
 
             builder.RegisterType<EmailService>()
                 .As<IEmailService>()
-                .SingleInstance()
-                .WithParameter("contentUrl", _settings.ContentUrl);
+                .SingleInstance();
 
             builder.RegisterInstance(new EngineFactory().ForFileSystem(Path.Combine(_contentRootPath, "Templates")))
                 .As<IRazorLightEngine>();
 
-            builder.RegisterType<ViewRenderService>()
-                .As<IViewRenderService>()
+            builder.RegisterType<RazorRenderService>()
+                .As<IRazorRenderService>()
                 .SingleInstance();
         }
 

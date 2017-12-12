@@ -5,6 +5,5 @@
         public DbSettings Db { get; set; }
         public AzureQueueSettings AzureQueue { get; set; }
         public SmtpSettings Smtp { get; set; }
-        public string ContentUrl { get; set; }
     }
 }
