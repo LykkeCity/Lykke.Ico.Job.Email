@@ -94,23 +94,5 @@ namespace Lykke.Job.IcoEmailSender.Services
 
             await _investorEmailRepository.SaveAsync(typeName, message.EmailTo, subject, body);
         }
-
-        private async Task<string> RemoveSection(string body, string section)
-        {
-            try
-            {
-                return Utils.RemoveSection(body, section);
-            }
-            catch (Exception ex)
-            {
-                await _log.WriteErrorAsync(
-                        nameof(EmailService),
-                        nameof(RemoveSection),
-                        $"Failed to remove section: '{section}'. {Environment.NewLine}Body: {Environment.NewLine}{body}",
-                        ex);
-            }
-
-            return body;
-        }
     }
 }
