@@ -45,23 +45,5 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
 
             await _emailService.SendEmail(message);
         }
-
-        [QueueTrigger(Consts.Emails.Queues.InvestorNeedMoreInvestment)]
-        public async Task HandleEmailMessage(InvestorNeedMoreInvestmentMessage message)
-        {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorNeedMoreInvestmentMessage),
-                $"Message: {message.ToJson()}");
-
-            await _emailService.SendEmail(message);
-        }
-
-        [QueueTrigger(Consts.Emails.Queues.InvestorKycRequest)]
-        public async Task HandleEmailMessage(InvestorKycRequestMessage message)
-        {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorKycRequestMessage),
-                $"Message: {message.ToJson()}");
-
-            await _emailService.SendEmail(message);
-        }
     }
 }

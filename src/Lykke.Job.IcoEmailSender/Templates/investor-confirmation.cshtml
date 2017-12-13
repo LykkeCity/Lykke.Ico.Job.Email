@@ -2,47 +2,43 @@
 @{
     Layout = "investor-layout";
 }
-
-<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-    <!-- title -->
-    <tr>
-        <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px;">You are a few clicks away from the procivis token sale.</td>
-    </tr>
-    <!-- end title -->
-    <tr>
-        <td height="35"></td>
-    </tr>
-    <tr>
-        <td align="center">
-            <table width="25" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td height="2" style="border-bottom:2px solid #fc625e;"></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td height="35"></td>
-    </tr>
-    <!-- content -->
-    <tr>
-        <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:24px; color:#7f8c8d; line-height:30px;">Click on the button below to start the process. </td>
-    </tr>
-    <!-- end content -->
-    <tr>
-        <td height="35"></td>
-    </tr>
-    <!-- button -->
-    <tr>
-        <td align="center">
-            <table class="textbutton" align="center" bgcolor="#fc625e" border="0" cellspacing="0" cellpadding="0" style=" border-radius:4px; box-shadow: 0px;">
-                <tr>
-                    <td class="btn-link" height="55" align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:16px; color:#FFFFFF;font-weight: bold;padding-left: 25px;padding-right: 25px;">
-                        <a href="@Model.ConfirmationLink">Confirm email address</a>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <!-- end button -->
-</table>
+@section Main {
+    <table border="0" cellpadding="0" cellspacing="0">
+        <!-- title -->
+        <tr>
+            <td align="center" style="font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px; line-height:48px;">
+                You are a few clicks away from the procivis token sale
+            </td>
+        </tr>
+        <!-- end title -->
+        <tr>
+            <td align="center" style="padding-top:35px;">
+                <table width="25" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td height="2" style="border-bottom:2px solid #fc625e;"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- content -->
+        <tr>
+            <td align="center" style="padding-top:35px; font-size:24px; color:#7f8c8d; line-height:30px;">
+                Click on the button below to start the process.
+            </td>
+        </tr>
+        <!-- end content -->
+        <!-- button -->
+        <tr>
+            <td align="center" style="padding-top:35px;">
+                <table class="btn" align="center" bgcolor="#fc625e" border="0" cellspacing="0" cellpadding="0" style="border-radius:4px; box-shadow:0px;">
+                    <tr>
+                        <td height="55" align="center" style="font-size:16px; color:#FFFFFF; font-weight:bold; padding-left:25px; padding-right:25px;">
+                            <a href="@Model.ConfirmationLink" style="color:#FFFFFF; text-decoration:none;">Confirm email address</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- end button -->
+    </table>
+}

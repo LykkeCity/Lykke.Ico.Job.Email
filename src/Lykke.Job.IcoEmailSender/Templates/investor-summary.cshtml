@@ -2,354 +2,170 @@
 @{
     Layout = "investor-layout";
 }
-
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-    <!--title-->
-    <tr align="center">
-        <td style="font-family: 'Open Sans', Arial, sans-serif; font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px;">Summary of Investor Details</td>
-    </tr>
-    <!--end title-->
-    <tr>
-        <td height="35"></td>
-    </tr>
-    <tr>
-        <td align="center">
-            <table width="25" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td height="2" style="border-bottom:2px solid #fc625e;"></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td height="35"></td>
-    </tr>
-    <!--content-->
-    <tr align="center">
-        <td style="font-family: 'Open Sans', Arial, sans-serif; font-size:24px; color:#7f8c8d; line-height:30px;">
-            Thank you for registering for the procivis token sale. Below you find the summary of your procivis token sale account.
-        </td>
-    </tr>
-    <tr>
-        <td height="35"></td>
-    </tr>
-    <tr align="center">
-        <td style="font-family: 'Open Sans', Arial, sans-serif; font-size:24px; color:#7f8c8d; line-height:30px;">
-            You can send your Ether and Bitcoin to the deposit addresses from any source, including wallets from any exchange. You can send funds as often as you want.
-        </td>
-    </tr>
-    <!--end content-->
-</table>
-
-@section Data
-{
-    <!-- Pay-In Bitcoin Address -->
-    <table bgcolor="#F4F4F4" align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
+@section Main {
+    <table border="0" cellpadding="0" cellspacing="0">
+        <!-- title -->
         <tr>
-            <td align="center">
-                <table align="center" border="0" cellpadding="0" cellspacing="0">
+            <td align="center" style="font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px; line-height:48px;">
+                Summary of Investor Details
+            </td>
+        </tr>
+        <!-- end title -->
+        <tr>
+            <td align="center" style="padding-top:35px;">
+                <table width="25" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td align="center" width="600">
-                            <table bgcolor="#FFFFFF" style="border:1px solid #EAEAEA; border-radius:4px; border-bottom:2px solid #DDDDDD;" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td align="center">
-                                        <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td height="20"></td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center">
-                                                    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                                        <!--title-->
-                                                        <tr align="center">
-                                                            <td style="font-family:Century Gothic, Arial, Sans-serif; font-size:18px; color:#2F4255;font-weight:bold;">Your Bitcoin Deposit Address</td>
-                                                        </tr>
-                                                        <!--end title-->
-                                                        <tr>
-                                                            <td height="15"></td>
-                                                        </tr>
-                                                        <!--content-->
-                                                        <tr align="center">
-                                                            <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;">Buy your procivis tokens by sending BTC to this address.</td>
-                                                        </tr>
-                                                        <tr align="center">
-                                                            <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;"><a href="@Model.LinkBtcAddress/@Model.PayInBtcAddress">@Model.PayInBtcAddress</a></td>
-                                                        </tr>
-                                                        <!--end content-->
-                                                        <!--img-->
-                                                        <tr align="center">
-                                                            <td>
-                                                                <table align="center" border="0" cellpadding="0" cellspacing="0">
-                                                                    <tr>
-                                                                        <td align="center" width="340">
-                                                                            <table border="0" align="center" cellpadding="0" cellspacing="0">
-                                                                                <tr>
-                                                                                    <td align="center" style="line-height:0px;"><img style="display:block; line-height:0px; font-size:0px; border:0px; max-width: 200px;" class="img1" src="cid:{PayInBtcAddressQRCode.png}" alt="Pay-In: Bitcoin Address" /></td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <!--end img-->
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td height="35"></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
+                        <td height="2" style="border-bottom:2px solid #fc625e;"></td>
                     </tr>
                 </table>
             </td>
         </tr>
+        <!-- content -->
         <tr>
-            <td height="35"></td>
-        </tr>
-    </table>
-    <!-- end Pay-In Bitcoin Address -->
-
-    <!-- Pay-In Ether Address -->
-    <table bgcolor="#F4F4F4" align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td align="center">
-                <table align="center" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td align="center" width="600">
-                            <table bgcolor="#FFFFFF" style="border:1px solid #EAEAEA; border-radius:4px; border-bottom:2px solid #DDDDDD;" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td align="center">
-                                        <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td height="20"></td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center">
-                                                    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                                        <!--title-->
-                                                        <tr align="center">
-                                                            <td style="font-family:Century Gothic, Arial, Sans-serif; font-size:18px; color:#2F4255;font-weight:bold;">Your Ethereum Deposit Address</td>
-                                                        </tr>
-                                                        <!--end title-->
-                                                        <tr>
-                                                            <td height="15"></td>
-                                                        </tr>
-                                                        <!--content-->
-                                                        <tr align="center">
-                                                            <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;">Buy your procivis tokens by sending ETH to this address.</td>
-                                                        </tr>
-                                                        <tr align="center">
-                                                            <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;"><a href="@Model.LinkEthAddress/@Model.PayInEthAddress">@Model.PayInEthAddress</a></td>
-                                                        </tr>
-                                                        <!--end content-->
-                                                        <!--img-->
-                                                        <tr>
-                                                            <td>
-                                                                <table align="center" border="0" cellpadding="0" cellspacing="0">
-                                                                    <tr>
-                                                                        <td align="center" width="340">
-                                                                            <table border="0" align="center" cellpadding="0" cellspacing="0">
-                                                                                <tr>
-                                                                                    <td align="center" style="line-height:0px;"><img style="display:block; line-height:0px; font-size:0px; border:0px; max-width: 200px;" class="img1" src="cid:{PayInEthAddressQRCode.png}" alt="Pay-In: Ether Address" /></td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <!--end img-->
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td height="35"></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+            <td align="center" style="padding-top:35px; font-size:24px; color:#7f8c8d; line-height:30px;">
+                Thank you for registering for the procivis token sale. Below you find the summary of your procivis token sale account.
             </td>
         </tr>
         <tr>
-            <td height="35"></td>
+            <td align="center" style="padding-top:35px; font-size:24px; color:#7f8c8d; line-height:30px;">
+                You can send your Ether and Bitcoin to the deposit addresses from any source, including wallets from any exchange. You can send funds as often as you want.
+            </td>
         </tr>
+        <!-- end content -->
     </table>
-    <!-- end Pay-In Ether Address -->
-
-    <!-- Token Wallet Address -->
-    <table bgcolor="#F4F4F4" align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
+}
+@section Section1 {
+    <table border="0" cellpadding="0" cellspacing="0">
+        <!-- title -->
         <tr>
-            <td align="center">
-                <table align="center" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td align="center" width="600">
-                            <table bgcolor="#FFFFFF" style="border:1px solid #EAEAEA; border-radius:4px; border-bottom:2px solid #DDDDDD;" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td align="center">
-                                        <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td height="20"></td>
-                                            </tr>
-                                            <tr>
-                                                <td align="center">
-                                                    <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                                        <!--title-->
-                                                        <tr align="center">
-                                                            <td style="font-family:Century Gothic, Arial, Sans-serif; font-size:18px; color:#2F4255;font-weight:bold;">Your Token Wallet Address</td>
-                                                        </tr>
-                                                        <!--end title-->
-                                                        <tr>
-                                                            <td height="15"></td>
-                                                        </tr>
-                                                        <!--content-->
-                                                        <tr align="center">
-                                                            <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;">This is your wallet address where you will receive your procivis tokens at the time of distribution.</td>
-                                                        </tr>
-                                                        <tr align="center">
-                                                            <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;"><a href="@Model.LinkEthAddress/@Model.TokenAddress">@Model.TokenAddress</a></td>
-                                                        </tr>
-                                                        <!--end content-->
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td height="35"></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+            <td align="center" style="font-size:18px; color:#2F4255;font-weight:bold;">
+                Your Bitcoin Deposit Address
+            </td>
+        </tr>
+        <!-- end title -->
+        <!-- content -->
+        <tr>
+            <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                Buy your procivis tokens by sending BTC to this address.
             </td>
         </tr>
         <tr>
-            <td height="35"></td>
+            <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                <a href="@Model.LinkBtcAddress/@Model.PayInBtcAddress">@Model.PayInBtcAddress</a>
+            </td>
         </tr>
+        <!-- end content -->
+        <!--img-->
+        <tr align="center">
+            <td align="center" style="padding-top:15px;">
+                <img style="display:block; border:0px;" width="200" height="200" src="cid:{PayInBtcAddressQRCode.png}" alt="Pay-In: Bitcoin Address" />
+            </td>
+        </tr>
+        <!--end img-->
     </table>
-    <!-- end Token Wallet Address -->
-
-    <!-- RefundBtcAddress -->
+}
+@section Section2 {
+    <table border="0" cellpadding="0" cellspacing="0">
+        <!-- title -->
+        <tr>
+            <td align="center" style="font-size:18px; color:#2F4255;font-weight:bold;">
+                Your Ethereum Deposit Address
+            </td>
+        </tr>
+        <!-- end title -->
+        <!-- content -->
+        <tr>
+            <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                Buy your procivis tokens by sending ETH to this address.
+            </td>
+        </tr>
+        <tr>
+            <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                <a href="@Model.LinkEthAddress/@Model.PayInEthAddress">@Model.PayInEthAddress</a>
+            </td>
+        </tr>
+        <!-- end content -->
+        <!--img-->
+        <tr align="center">
+            <td align="center" style="padding-top:15px;">
+                <img style="display:block; border:0px;" width="200" height="200" src="cid:{PayInEthAddressQRCode.png}" alt="Pay-In: Ether Address" />
+            </td>
+        </tr>
+        <!--end img-->
+    </table>
+}
+@section Section3 {
+    <table border="0" cellpadding="0" cellspacing="0">
+        <!-- title -->
+        <tr>
+            <td align="center" style="font-size:18px; color:#2F4255;font-weight:bold;">
+                Your Token Wallet Address
+            </td>
+        </tr>
+        <!-- end title -->
+        <!-- content -->
+        <tr>
+            <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                This is your wallet address where you will receive your procivis tokens at the time of distribution.
+            </td>
+        </tr>
+        <tr>
+            <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                <a href="@Model.LinkEthAddress/@Model.TokenAddress">@Model.TokenAddress</a>
+            </td>
+        </tr>
+        <!-- end content -->
+    </table>
+}
+@section Section4 {
     @if (!string.IsNullOrWhiteSpace(Model.RefundBtcAddress))
     {
-        <table bgcolor="#F4F4F4" align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <!-- title -->
             <tr>
-                <td align="center">
-                    <table align="center" border="0" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td align="center" width="600">
-                                <table bgcolor="#FFFFFF" style="border:1px solid #EAEAEA; border-radius:4px; border-bottom:2px solid #DDDDDD;" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td align="center">
-                                            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td height="20"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="center">
-                                                        <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                                            <!--title-->
-                                                            <tr align="center">
-                                                                <td style="font-family:Century Gothic, Arial, Sans-serif; font-size:18px; color:#2F4255;font-weight:bold;">Refund: Bitcoin Address</td>
-                                                            </tr>
-                                                            <!--end title-->
-                                                            <tr>
-                                                                <td height="15"></td>
-                                                            </tr>
-                                                            <!--content-->
-                                                            <tr align="center">
-                                                                <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;">If it becomes necessary to refund your Bitcoin, we will use the address you provided.</td>
-                                                            </tr>
-                                                            <tr align="center">
-                                                                <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;"><a href="@Model.LinkBtcAddress/@Model.RefundBtcAddress">@Model.RefundBtcAddress</a></td>
-                                                            </tr>
-                                                            <!--end content-->
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td height="35"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+                <td align="center" style="font-size:18px; color:#2F4255;font-weight:bold;">
+                    Refund: Bitcoin Address
+                </td>
+            </tr>
+            <!-- end title -->
+            <!-- content -->
+            <tr>
+                <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                    If it becomes necessary to refund your Bitcoin, we will use the address you provided.
                 </td>
             </tr>
             <tr>
-                <td height="35"></td>
+                <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                    <a href="@Model.LinkBtcAddress/@Model.RefundBtcAddress">@Model.RefundBtcAddress</a>
+                </td>
             </tr>
+            <!-- end content -->
         </table>
     }
-    <!-- end RefundBtcAddress -->
-
-    <!-- RefundEthAddress -->
-    @if (!string.IsNullOrWhiteSpace(Model.RefundEthAddress))
+}
+@section Section5 {
+    @if (!string.IsNullOrWhiteSpace(Model.RefundBtcAddress))
     {
-        <table bgcolor="#F4F4F4" align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <!-- title -->
             <tr>
-                <td align="center">
-                    <table align="center" border="0" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td align="center" width="600">
-                                <table bgcolor="#FFFFFF" style="border:1px solid #EAEAEA; border-radius:4px; border-bottom:2px solid #DDDDDD;" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td align="center">
-                                            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                                <tr>
-                                                    <td height="20"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="center">
-                                                        <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                                            <!--title-->
-                                                            <tr align="center">
-                                                                <td style="font-family:Century Gothic, Arial, Sans-serif; font-size:18px; color:#2F4255;font-weight:bold;">Refund: Ether Address</td>
-                                                            </tr>
-                                                            <!--end title-->
-                                                            <tr>
-                                                                <td height="15"></td>
-                                                            </tr>
-                                                            <!--content-->
-                                                            <tr align="center">
-                                                                <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;">If it becomes necessary to refund your Ether, we will use the address you provided.</td>
-                                                            </tr>
-                                                            <tr align="center">
-                                                                <td style="font-family:Open sans, Arial, Sans-serif; font-size:14px; color:#808E8E;line-height:28px;"><a href="@Model.LinkEthAddress/@Model.RefundEthAddress">@Model.RefundEthAddress</a></td>
-                                                            </tr>
-                                                            <!--end content-->
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td height="35"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+                <td align="center" style="font-size:18px; color:#2F4255;font-weight:bold;">
+                    Refund: Ethereum Address
+                </td>
+            </tr>
+            <!-- end title -->
+            <!-- content -->
+            <tr>
+                <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                    If it becomes necessary to refund your Ether, we will use the address you provided.
                 </td>
             </tr>
             <tr>
-                <td height="35"></td>
+                <td align="center" style="padding-top:15px; font-size:14px; color:#808E8E;line-height:28px;">
+                    <a href="@Model.LinkEthAddress/@Model.RefundEthAddress">@Model.RefundEthAddress</a>
+                </td>
             </tr>
+            <!-- end content -->
         </table>
     }
-    <!-- end RefundEthAddress -->
 }

@@ -2,46 +2,106 @@
 @{
     Layout = "investor-layout";
 }
-
-<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-        <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px;">Payment Confirmation</td>
-    </tr>
-    <tr>
-        <td height="35"></td>
-    </tr>
-    <tr>
-        <td align="center">
-            <table width="25" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td height="2" style="border-bottom:2px solid #fc625e;"></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td height="35"></td>
-    </tr>
-    <tr>
-        <td align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:24px; color:#7f8c8d; line-height:30px;">We successfully received your payment of @Model.Payment</td>
-    </tr>
-    <!--TransactionLink-->
-    @if (!string.IsNullOrWhiteSpace(Model.TransactionLink))
-    {
+@section Main {
+    <table border="0" cellpadding="0" cellspacing="0">
+        <!-- title -->
         <tr>
-            <td height="35"></td>
+            <td align="center" style="font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px; line-height:48px;">
+                Payment Confirmation
+            </td>
         </tr>
+        <!-- end title -->
         <tr>
-            <td align="center">
-                <table class="textbutton" align="center" bgcolor="#fc625e" border="0" cellspacing="0" cellpadding="0" style=" border-radius:4px; box-shadow: 0px;">
+            <td align="center" style="padding-top:35px;">
+                <table width="25" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td class="btn-link" height="55" align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:16px; color:#FFFFFF;font-weight: bold;padding-left: 25px;padding-right: 25px;">
-                            <a href="@Model.TransactionLink">Track Transaction</a>
-                        </td>
+                        <td height="2" style="border-bottom:2px solid #fc625e;"></td>
                     </tr>
                 </table>
             </td>
         </tr>
+        <!-- content -->
+        <tr>
+            <td align="center" style="padding-top:35px; font-size:24px; color:#7f8c8d; line-height:30px;">
+                We successfully received your payment of @Model.Payment
+            </td>
+        </tr>
+        <!-- end content -->
+        <!-- button -->
+        @if (!string.IsNullOrWhiteSpace(Model.TransactionLink))
+        {
+            <tr>
+                <td align="center" style="padding-top:35px;">
+                    <table class="btn" align="center" bgcolor="#fc625e" border="0" cellspacing="0" cellpadding="0" style="border-radius:4px; box-shadow:0px;">
+                        <tr>
+                            <td height="55" align="center" style="font-size:16px; color:#FFFFFF; font-weight:bold; padding-left:25px; padding-right:25px;">
+                                <a href="@Model.TransactionLink" style="color:#FFFFFF; text-decoration:none;">Track Transaction</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        }
+        <!-- end button -->
+    </table>
+}
+@section Section1 {
+    @if (Model.KycRequired)
+    {
+        <table border="0" cellpadding="0" cellspacing="0">
+            <!-- title -->
+            <tr>
+                <td align="center" style="font-size:18px; color:#2F4255;font-weight:bold;">
+                    KYC required
+                </td>
+            </tr>
+            <!-- end title -->
+            <!-- content -->
+            <tr>
+                <td align="center" style="padding-top:35px; font-size:14px; color:#808E8E;line-height:28px;">
+                    Click on the button below to start the KYC process.
+                </td>
+            </tr>
+            <!-- end content -->
+            <!-- button -->
+            <tr>
+                <td align="center" style="padding-top:35px;">
+                    <table class="btn" align="center" bgcolor="#fc625e" border="0" cellspacing="0" cellpadding="0" style="border-radius:4px; box-shadow:0px;">
+                        <tr>
+                            <td height="55" align="center" style="font-size:16px; color:#FFFFFF; font-weight:bold; padding-left:25px; padding-right:25px;">
+                                <a href="@Model.KycLink" style="color:#FFFFFF; text-decoration:none;">Start KYC</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- end button -->
+        </table>
     }
-    <!--end:TransactionLink-->
-</table>
+}
+@section Section2 {
+    @if (Model.MoreInvestmentRequired)
+    {
+        <table border="0" cellpadding="0" cellspacing="0">
+            <!-- title -->
+            <tr>
+                <td align="center" style="font-size:18px; color:#2F4255;font-weight:bold;">
+                    Need more investment
+                </td>
+            </tr>
+            <!-- end title -->
+            <!-- content -->
+            <tr>
+                <td align="center" style="padding-top:35px; font-size:14px; color:#808E8E;line-height:28px;">
+                    The minimum total amount to invest is $@Model.MinAmount. The amount you invested so far is $@Model.InvestedAmount.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="padding-top:35px; font-size:14px; color:#808E8E;line-height:28px;">
+                    You can invest more or request refund.
+                </td>
+            </tr>
+            <!-- end content -->
+        </table>
+    }
+}

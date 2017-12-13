@@ -18,8 +18,11 @@ namespace Lykke.Job.IcoEmailSender.Services
         private readonly IInvestorEmailRepository _investorEmailRepository;
         private readonly IRazorRenderService _razorRenderService;
 
-        public EmailService(ILog log, ISmtpService smtpService, IInvestorEmailRepository 
-            investorEmailRepository, IRazorRenderService razorRenderService)
+        public EmailService(
+            ILog log, 
+            ISmtpService smtpService, 
+            IInvestorEmailRepository investorEmailRepository,
+            IRazorRenderService razorRenderService)
         {
             _log = log;
             _smtpService = smtpService;
@@ -56,23 +59,7 @@ namespace Lykke.Job.IcoEmailSender.Services
             await SendInvestorEmail(message, subject, body);
         }
 
-        public async Task SendEmail(InvestorNeedMoreInvestmentMessage message)
-        {
-            var subject = Consts.Emails.Subjects.InvestorNeedMoreInvestment;
-            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorNeedMoreInvestment, message);
-
-            await SendInvestorEmail(message, subject, body);
-        }
-
-        public async Task SendEmail(InvestorKycRequestMessage message)
-        {
-            var subject = Consts.Emails.Subjects.InvestorKycRequest;
-            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorKycRequest, message);
-
-            await SendInvestorEmail(message, subject, body);
-        }
-
-        private async Task SendInvestorEmail<T>(T message, string subject, string body, Dictionary<string, byte[]> attachments = null)
+        public async Task SendInvestorEmail<T>(T message, string subject, string body, Dictionary<string, byte[]> attachments = null)
             where T : IInvestorMessage
         {
             var typeName = message.GetType().Name;
