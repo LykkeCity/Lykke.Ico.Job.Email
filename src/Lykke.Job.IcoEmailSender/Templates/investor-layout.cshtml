@@ -15,37 +15,19 @@
         <tr>
             <td align="center" style="padding-top:35px;">
                 <table bgcolor="#FFFFFF" style="border:1px solid #EAEAEA; border-radius:4px;" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <!-- logo -->
                     <tr>
-                        <td align="center" style="padding-top:35px;">
+                        <td align="center" style="padding-top:35px; padding-bottom:35px;">
                             <img style="display:block; border:0px; height: 100px; width: 100px" src="https://lkeicodev.blob.core.windows.net/email-templates/images/procivis.jpg" alt="procivis.ch" />
                         </td>
                     </tr>
-                    <tr>
-                        <td align="center" style="padding:35px;">
-                            @RenderSection("Main")
-                        </td>
-                    </tr>
+                    <!-- end logo -->
+                    <!-- main -->
+                    @RenderBody()
+                    <!-- end main -->
                 </table>
             </td>
         </tr>
-@{
-    int number = 1;
-    while (IsSectionDefined($"Section{number}"))
-    {
-        <tr>
-            <td align="center" style="padding-top:35px;">
-                <table bgcolor="#FFFFFF" style="border:1px solid #EAEAEA; border-radius:4px;" width="600" border="0" align="center" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td align="center" style="padding:35px;">
-                            @RenderSection($"Section{number}")
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        number++;
-    }
-}
         <tr>
             <td align="center" style="padding-top:35px; padding-bottom:35px; font-size:13px; color:#808E8E; line-height:28px;">
                 © 2017 <a href="https://procivis.ch">procivis.ch</a>. All Rights Reserved.
