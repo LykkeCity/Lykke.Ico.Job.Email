@@ -22,8 +22,9 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
         [QueueTrigger(Consts.Emails.Queues.InvestorConfirmation)]
         public async Task HandleEmailMessage(InvestorConfirmationMessage message)
         {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorConfirmationMessage),
-                $"Message: {message.ToJson()}");
+            await _log.WriteInfoAsync(nameof(HandleEmailMessage),
+                $"Type: {nameof(InvestorConfirmationMessage)}, Message: {message.ToJson()}",
+                $"New message");
 
             await _emailService.SendEmail(message);
         }
@@ -31,8 +32,9 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
         [QueueTrigger(Consts.Emails.Queues.InvestorSummary)]
         public async Task HandleEmailMessage(InvestorSummaryMessage message)
         {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorSummaryMessage),
-                $"Message: {message.ToJson()}");
+            await _log.WriteInfoAsync(nameof(HandleEmailMessage),
+                $"Type: {nameof(InvestorSummaryMessage)}, Message: {message.ToJson()}",
+                $"New message");
 
             await _emailService.SendEmail(message);
         }
@@ -40,8 +42,9 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
         [QueueTrigger(Consts.Emails.Queues.InvestorNewTransaction)]
         public async Task HandleEmailMessage(InvestorNewTransactionMessage message)
         {
-            await _log.WriteInfoAsync(nameof(EmailsAzureQueueHandler), nameof(HandleEmailMessage), nameof(InvestorNewTransactionMessage),
-                $"Message: {message.ToJson()}");
+            await _log.WriteInfoAsync(nameof(HandleEmailMessage),
+                $"Type: {nameof(InvestorNewTransactionMessage)}, Message: {message.ToJson()}",
+                $"New message");
 
             await _emailService.SendEmail(message);
         }

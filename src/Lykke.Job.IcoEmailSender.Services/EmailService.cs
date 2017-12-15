@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Common;
 using Common.Log;
 using Lykke.Ico.Core;
 using Lykke.Ico.Core.Helpers;
@@ -70,11 +71,9 @@ namespace Lykke.Job.IcoEmailSender.Services
             }
             catch (Exception ex)
             {
-                await _log.WriteErrorAsync(
-                        nameof(EmailService),
-                        nameof(SendEmail),
-                        $"Failed to send {typeName}: '{message.ToString()}'",
-                        ex);
+                await _log.WriteErrorAsync(nameof(SendEmail),
+                    $"Type: {typeName}, Message: '{message.ToJson()}'",
+                    ex);
 
                 throw ex;
             }
