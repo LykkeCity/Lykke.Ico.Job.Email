@@ -90,7 +90,11 @@ namespace Lykke.Job.IcoEmailSender
 
                 app.UseMvc();
                 app.UseSwagger();
-                app.UseSwaggerUi();
+                app.UseSwaggerUI(x =>
+                {
+                    x.RoutePrefix = "swagger/ui";
+                    x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                });
                 app.UseStaticFiles();
 
                 appLifetime.ApplicationStarted.Register(() => StartApplication().Wait());
@@ -204,6 +208,8 @@ namespace Lykke.Job.IcoEmailSender
 
                 aggregateLogger.AddLog(azureStorageLogger);
             }
+
+            aggregateLogger.AddIcoSlackLog(slackService);
 
             return aggregateLogger;
         }

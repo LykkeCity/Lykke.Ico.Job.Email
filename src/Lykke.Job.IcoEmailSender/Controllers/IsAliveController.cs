@@ -4,7 +4,7 @@ using System.Net;
 using Lykke.Job.IcoEmailSender.Core.Services;
 using Lykke.Job.IcoEmailSender.Models;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.SwaggerGen.Annotations;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Lykke.Job.IcoEmailSender.Controllers
 {
