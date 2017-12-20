@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Lykke.Job.IcoEmailSender.Core\Lykke.Job.IcoEmailSender.Core.csproj" />
+    <ProjectReference Include="..\..\src\Lykke.Job.IcoEmailSender.Services\Lykke.Job.IcoEmailSender.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
