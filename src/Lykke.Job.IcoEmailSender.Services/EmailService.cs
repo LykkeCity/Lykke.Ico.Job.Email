@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common;
 using Common.Log;
-using Lykke.Ico.Core;
 using Lykke.Ico.Core.Helpers;
 using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Repositories.InvestorEmail;

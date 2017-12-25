@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Log;
-using Lykke.Ico.Core;
 using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Repositories.InvestorEmail;
 using Lykke.Job.IcoEmailSender.Core.Services;
 using Lykke.Job.IcoEmailSender.Services;
 using Moq;
 using Xunit;
+using Lykke.Job.IcoEmailSender.Core;
 
 namespace Lykke.Job.IcoEmailSender.Tests
 {
