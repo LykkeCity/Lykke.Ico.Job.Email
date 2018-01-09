@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lykke.Common" Version="3.0.2" />
     <PackageReference Include="MailKit" Version="1.22.0" />
   </ItemGroup>
 
