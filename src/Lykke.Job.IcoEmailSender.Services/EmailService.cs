@@ -42,13 +42,8 @@ namespace Lykke.Job.IcoEmailSender.Services
         {
             var subject = Consts.Emails.Subjects.InvestorSummary;
             var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorSummary, message);
-            var attachments = new Dictionary<string, byte[]>
-            {
-                { "PayInBtcAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress) },
-                { "PayInEthAddressQRCode.png", QRCodeHelper.GenerateQRPng(message.PayInBtcAddress) }
-            };
 
-            await SendInvestorEmail(message, subject, body, attachments);
+            await SendInvestorEmail(message, subject, body);
         }
 
         public async Task SendEmail(InvestorNewTransactionMessage message)

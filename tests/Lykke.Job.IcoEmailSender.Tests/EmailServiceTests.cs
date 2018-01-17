@@ -60,8 +60,6 @@ namespace Lykke.Job.IcoEmailSender.Tests
             // Arrange
             var emailService = Init();
             var email = "test@test.test";
-            var payInBtcAddress = "testBtc";
-            var payInEthAddress = "testEth";
             _razorRenderService
                 .Setup(x => x.Render(It.IsAny<string>(), It.IsAny<InvestorSummaryMessage>()))
                 .Returns((string k, InvestorSummaryMessage m) => Task.FromResult(k));
@@ -69,9 +67,7 @@ namespace Lykke.Job.IcoEmailSender.Tests
             // Act
             await emailService.SendEmail(new InvestorSummaryMessage
             {
-                EmailTo = email,
-                PayInBtcAddress = payInBtcAddress,
-                PayInEthAddress = payInEthAddress
+                EmailTo = email
             });
 
             // Assert
@@ -79,7 +75,7 @@ namespace Lykke.Job.IcoEmailSender.Tests
                 It.Is<string>(e => e == email),
                 It.Is<string>(s => s == Consts.Emails.Subjects.InvestorSummary),
                 It.Is<string>(b => b == Consts.Emails.BodyTemplates.InvestorSummary),
-                It.Is<Dictionary<string, byte[]>>(a => a.Count == 2)
+                It.Is<Dictionary<string, byte[]>>(a => a == null)
             ));
         }
 

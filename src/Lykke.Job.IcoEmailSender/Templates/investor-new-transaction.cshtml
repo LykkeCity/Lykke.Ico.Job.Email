@@ -4,6 +4,7 @@
 @{
     Layout = "investor-layout";
 }
+
 <!-- title -->
 <tr>
     <td align="center" style="padding:0px 35px 35px; font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:2px; line-height:48px;">
@@ -25,7 +26,11 @@
 <!-- content -->
 <tr>
     <td align="center" style="padding:0px 35px 35px; font-size:16px; color:#7f8c8d; line-height:24px;">
-        We successfully received your payment of @Model.Payment.
+        We successfully received your payment of @Model.TransactionAmount @Model.TransactionAsset.
+        @if (!string.IsNullOrWhiteSpace(Model.LinkTransactionDetails))
+        {
+            <text>You can find transaction details <a href="@Model.LinkTransactionDetails">here</a></text>
+        }
     </td>
 </tr>
 <!-- end content -->
@@ -42,8 +47,8 @@
     <!-- content -->
     <tr>
         <td align="center" style="padding:0px 35px 15px; font-size:16px; color:#808E8E;line-height:28px;">
-            The minimum contribution is $@Model.MinAmount.
-            The amount you paid so far is $@Model.InvestedAmount.
+            The minimum contribution is $@Model.MinAmount USD.
+            The amount you paid so far is $@Model.InvestedAmountUsd USD.
         </td>
     </tr>
     <tr>
@@ -71,36 +76,18 @@
         </td>
     </tr>
     <!-- end content -->
-    @*
-    <!-- button -->
-    <tr>
-        <td align="center" style="padding:0px 35px 35px;">
-            <table align="center" bgcolor="#c16c83" border="0" cellspacing="0" cellpadding="0" style="border-radius:4px; box-shadow:0px;">
-                <tr>
-                    <td height="55" width="196" align="center" style="font-size:16px; color:#FFFFFF; font-weight:bold; padding-left:25px; padding-right:25px;">
-                        <a href="@Model.KycLink" style="color:#FFFFFF; text-decoration:none;">Start KYC</a>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <!-- end button -->
-    *@
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.TransactionLink))
-{
-    <!-- button -->
-    <tr>
-        <td align="center" style="padding:0px 35px 35px;">
-            <table align="center" bgcolor="#c16c83" border="0" cellspacing="0" cellpadding="0" style="border-radius:4px; box-shadow:0px;">
-                <tr>
-                    <td height="55" width="196" align="center" style="font-size:16px; color:#FFFFFF; font-weight:bold; padding-left:25px; padding-right:25px;">
-                        <a href="@Model.TransactionLink" style="color:#FFFFFF; text-decoration:none;">My Dashboard</a>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <!-- end button -->
-}
+<!-- button -->
+<tr>
+    <td align="center" style="padding:0px 35px 35px;">
+        <table align="center" bgcolor="#c16c83" border="0" cellspacing="0" cellpadding="0" style="border-radius:4px; box-shadow:0px;">
+            <tr>
+                <td height="55" width="196" align="center" style="font-size:16px; color:#FFFFFF; font-weight:bold; padding-left:25px; padding-right:25px;">
+                    <a href="@Model.LinkToSummaryPage" style="color:#FFFFFF; text-decoration:none;">My Dashboard</a>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<!-- end button -->
