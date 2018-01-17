@@ -26,20 +26,15 @@
 <!-- content -->
 <tr>
     <td align="center" style="padding:0px 35px 35px; font-size:16px; color:#7f8c8d; line-height:24px;">
-        We successfully received your payment of @Model.TransactionAmount @Model.TransactionAsset.
+        We received your payment of @Model.TransactionAmount @Model.TransactionAsset.
 
-        <p style="font-size:14px;">
-            @if (Model.TransactionAsset != "USD")
-            {
-                <text>@Model.TransactionAmountUsd USD.</text>
-            }
+        @if (Model.TransactionFee > 0)
+        {
+            <p>A transaction fee of @Model.TransactionFee USD was deducted from your payment.</p>
+        }
 
-            @Model.TransactionAmountToken VLD.
-            
-            @if (Model.TransactionAsset == "USD")
-            {
-                <text>Fee: @Model.TransactionFee USD.</text>
-            }
+        <p>
+            We reserved @Model.InvestedAmountToken VLD for you.
         </p>
     </td>
 </tr>
