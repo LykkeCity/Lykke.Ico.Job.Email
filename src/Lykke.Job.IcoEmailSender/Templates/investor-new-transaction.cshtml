@@ -29,11 +29,16 @@
         We successfully received your payment of @Model.TransactionAmount @Model.TransactionAsset.
 
         <p style="font-size:14px;">
-            Tokens recieved: @Model.InvestedAmountToken VLD
-            
-            @if (Model.TransactionFee > 0)
+            @if (Model.TransactionAsset != "USD")
             {
-                <text>. Payment Fee: @Model.TransactionFee USD</text>
+                <text>@Model.TransactionAmountUsd USD.</text>
+            }
+
+            @Model.TransactionAmountToken VLD.
+            
+            @if (Model.TransactionAsset == "USD")
+            {
+                <text>Fee: @Model.TransactionFee USD.</text>
             }
         </p>
     </td>
