@@ -6,9 +6,9 @@
         {
             public class Subjects
             {
-                public const string InvestorConfirmation = "Email Confirmation - VALID ITO";
-                public const string InvestorSummary = "Summary - VALID ITO";
-                public const string InvestorNewTransaction = "New Transaction - VALID ITO";
+                public const string InvestorConfirmation = "Email Confirmation - SMARC ITO";
+                public const string InvestorSummary = "Summary - SMARC ITO";
+                public const string InvestorNewTransaction = "New Transaction - SMARC ITO";
             }
 
             public class BodyTemplates
