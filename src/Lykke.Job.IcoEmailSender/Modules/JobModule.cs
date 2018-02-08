@@ -13,22 +13,22 @@ namespace Lykke.Job.IcoEmailSender.Modules
 {
     public class JobModule : Module
     {
-        private readonly IcoEmailSenderSettings _settings;
-        private readonly IReloadingManager<DbSettings> _dbSettingsManager;
+        private readonly IReloadingManager<IcoEmailSenderSettings> _settings;
         private readonly ILog _log;
         private readonly string _contentRootPath;
 
-        public JobModule(IcoEmailSenderSettings settings, IReloadingManager<DbSettings> dbSettingsManager, ILog log, string contentRootPath)
+        public JobModule(IReloadingManager<IcoEmailSenderSettings> settings, 
+            ILog log, 
+            string contentRootPath)
         {
             _settings = settings;
             _log = log;
-            _dbSettingsManager = dbSettingsManager;
             _contentRootPath = contentRootPath;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            var connectionStringManager = _dbSettingsManager.ConnectionString(x => x.IcoDataConnString);
+            var connectionStringManager = _settings.ConnectionString(x => x.Db.IcoDataConnString);
 
             builder.RegisterInstance(_log)
                 .As<ILog>()
@@ -44,7 +44,11 @@ namespace Lykke.Job.IcoEmailSender.Modules
             builder.RegisterType<ShutdownManager>()
                 .As<IShutdownManager>();
 
-            RegisterAzureQueueHandlers(builder);
+            builder.AddTriggers(
+                pool =>
+                {
+                    pool.AddDefaultConnection(_settings.ConnectionString(x => x.AzureQueue.ConnectionString));
+                });
 
             builder.RegisterType<InvestorEmailRepository>()
                 .As<IInvestorEmailRepository>()
@@ -54,7 +58,7 @@ namespace Lykke.Job.IcoEmailSender.Modules
             builder.RegisterType<SmtpService>()
                 .As<ISmtpService>()
                 .SingleInstance()
-                .WithParameter(TypedParameter.From(_settings.Smtp));
+                .WithParameter(TypedParameter.From(_settings.CurrentValue.Smtp));
 
             builder.RegisterType<EmailService>()
                 .As<IEmailService>()
@@ -66,15 +70,6 @@ namespace Lykke.Job.IcoEmailSender.Modules
             builder.RegisterType<RazorRenderService>()
                 .As<IRazorRenderService>()
                 .SingleInstance();
-        }
-
-        private void RegisterAzureQueueHandlers(ContainerBuilder builder)
-        {
-            builder.AddTriggers(
-                pool =>
-                {
-                    pool.AddDefaultConnection(_settings.AzureQueue.ConnectionString);
-                });
         }
     }
 }
