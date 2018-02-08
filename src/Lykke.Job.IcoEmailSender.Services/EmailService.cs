@@ -54,6 +54,14 @@ namespace Lykke.Job.IcoEmailSender.Services
             await SendInvestorEmail(message, subject, body);
         }
 
+        public async Task SendEmail(InvestorKycNotificationMessage message)
+        {
+            var subject = Consts.Emails.Subjects.InvestorKycNotification;
+            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorKycNotification, message);
+
+            await SendInvestorEmail(message, subject, body);
+        }
+
         public async Task SendInvestorEmail<T>(T message, string subject, string body, Dictionary<string, byte[]> attachments = null)
             where T : IInvestorMessage
         {

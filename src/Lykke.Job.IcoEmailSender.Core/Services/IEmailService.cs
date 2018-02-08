@@ -8,5 +8,6 @@ namespace Lykke.Job.IcoEmailSender.Core.Services
         Task SendEmail(InvestorConfirmationMessage message);
         Task SendEmail(InvestorSummaryMessage message);
         Task SendEmail(InvestorNewTransactionMessage message);
+        Task SendEmail(InvestorKycNotificationMessage message);
     }
 }
