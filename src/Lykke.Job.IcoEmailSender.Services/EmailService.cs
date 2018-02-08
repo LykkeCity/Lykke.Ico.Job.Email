@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common;
 using Common.Log;
-using Lykke.Ico.Core.Helpers;
 using Lykke.Ico.Core.Queues.Emails;
 using Lykke.Ico.Core.Repositories.InvestorEmail;
 using Lykke.Job.IcoEmailSender.Core;
@@ -54,10 +53,10 @@ namespace Lykke.Job.IcoEmailSender.Services
             await SendInvestorEmail(message, subject, body);
         }
 
-        public async Task SendEmail(InvestorKycNotificationMessage message)
+        public async Task SendEmail(InvestorKycReminderMessage message)
         {
-            var subject = Consts.Emails.Subjects.InvestorKycNotification;
-            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorKycNotification, message);
+            var subject = Consts.Emails.Subjects.InvestorKycReminder;
+            var body = await _razorRenderService.Render(Consts.Emails.BodyTemplates.InvestorKycReminder, message);
 
             await SendInvestorEmail(message, subject, body);
         }
