@@ -10,6 +10,7 @@
                 public const string InvestorSummary = "Summary - VALID ITO";
                 public const string InvestorNewTransaction = "New Transaction - VALID ITO";
                 public const string InvestorKycReminder = "KYC Reminder - VALID ITO";
+                public const string InvestorReferralCode = "Referral Program - VALID ITO";
             }
 
             public class BodyTemplates
@@ -18,6 +19,7 @@
                 public const string InvestorSummary = "investor-summary";
                 public const string InvestorNewTransaction = "investor-new-transaction";
                 public const string InvestorKycReminder = "investor-kyc-reminder";
+                public const string InvestorReferralCode = "investor-referral-code";
             }
         }
     }

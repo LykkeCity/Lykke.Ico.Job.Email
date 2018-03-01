@@ -1,0 +1,56 @@
+﻿@using Lykke.Ico.Core.Queues.Emails;
+@using RazorLight
+@inherits TemplatePage<InvestorReferralCodeMessage>
+@{
+    Layout = "investor-layout";
+}
+<!-- main section -->
+<!-- title -->
+<tr>
+    <td align="center" style="padding:0px 35px 35px; font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:2px; line-height:48px;">
+        Referral Program
+    </td>
+</tr>
+<!-- end title -->
+<!-- hr -->
+<tr>
+    <td align="center" style="padding:0px 35px 35px;">
+        <table width="25" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td height="2" style="border-bottom:2px solid #c16c83;"></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<!-- end hr -->
+<!-- main content -->
+<tr>
+    <td align="center" style="padding:0px 35px 15px; font-size:16px; color:#7f8c8d; line-height:24px;">
+        Some details about referral program here...
+    </td>
+</tr>
+<tr>
+    <td align="center" style="padding:20px 35px 15px; font-size:16px; color:#7f8c8d; line-height:24px;">
+        Your referral code: @Model.ReferralCode
+    </td>
+</tr>
+<tr>
+    <td align="center" style="padding:20px 35px 15px; font-size:16px; color:#7f8c8d; line-height:24px;">
+        You can also find out referral code via the button below.
+    </td>
+</tr>
+<!-- end main content -->
+<!-- button -->
+<tr>
+    <td align="center" style="padding:0px 35px 35px;">
+        <table align="center" bgcolor="#c16c83" border="0" cellspacing="0" cellpadding="0" style="border-radius:4px; box-shadow:0px;">
+            <tr>
+                <td height="55" width="196" align="center" style="font-size:16px; color:#FFFFFF; font-weight:bold; padding-left:25px; padding-right:25px;">
+                    <a href="@Model.LinkToSummaryPage" style="color:#FFFFFF; text-decoration:none;">My Dashboard</a>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<!-- end button -->
+<!-- end main section -->

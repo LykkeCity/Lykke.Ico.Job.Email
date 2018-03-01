@@ -58,5 +58,15 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
 
             await _emailService.SendEmail(message);
         }
+
+        [QueueTrigger(Consts.Emails.Queues.InvestorReferralCode)]
+        public async Task HandleEmailMessage(InvestorReferralCodeMessage message)
+        {
+            await _log.WriteInfoAsync(nameof(HandleEmailMessage),
+                $"Type: {nameof(InvestorReferralCodeMessage)}, Message: {message.ToJson()}",
+                $"New message");
+
+            await _emailService.SendEmail(message);
+        }
     }
 }
