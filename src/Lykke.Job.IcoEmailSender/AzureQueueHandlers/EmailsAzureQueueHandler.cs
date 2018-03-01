@@ -19,7 +19,7 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
             _emailService = emailService;
         }
 
-        [QueueTrigger(Consts.Emails.Queues.InvestorConfirmation)]
+        [QueueTrigger(Consts.Emails.Queues.InvestorConfirmation, 30000)]
         public async Task HandleEmailMessage(InvestorConfirmationMessage message)
         {
             await _log.WriteInfoAsync(nameof(HandleEmailMessage),
@@ -29,7 +29,7 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
             await _emailService.SendEmail(message);
         }
 
-        [QueueTrigger(Consts.Emails.Queues.InvestorSummary)]
+        [QueueTrigger(Consts.Emails.Queues.InvestorSummary, 30000)]
         public async Task HandleEmailMessage(InvestorSummaryMessage message)
         {
             await _log.WriteInfoAsync(nameof(HandleEmailMessage),
@@ -39,7 +39,7 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
             await _emailService.SendEmail(message);
         }
 
-        [QueueTrigger(Consts.Emails.Queues.InvestorNewTransaction)]
+        [QueueTrigger(Consts.Emails.Queues.InvestorNewTransaction, 30000)]
         public async Task HandleEmailMessage(InvestorNewTransactionMessage message)
         {
             await _log.WriteInfoAsync(nameof(HandleEmailMessage),
@@ -49,7 +49,7 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
             await _emailService.SendEmail(message);
         }
 
-        [QueueTrigger(Consts.Emails.Queues.InvestorKycReminder)]
+        [QueueTrigger(Consts.Emails.Queues.InvestorKycReminder, 30000)]
         public async Task HandleEmailMessage(InvestorKycReminderMessage message)
         {
             await _log.WriteInfoAsync(nameof(HandleEmailMessage),
@@ -59,7 +59,7 @@ namespace Lykke.Job.IcoEmailSender.AzureQueueHandlers
             await _emailService.SendEmail(message);
         }
 
-        [QueueTrigger(Consts.Emails.Queues.InvestorReferralCode)]
+        [QueueTrigger(Consts.Emails.Queues.InvestorReferralCode, 30000)]
         public async Task HandleEmailMessage(InvestorReferralCodeMessage message)
         {
             await _log.WriteInfoAsync(nameof(HandleEmailMessage),
