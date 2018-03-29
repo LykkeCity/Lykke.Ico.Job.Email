@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Templates\investor-20m-fix.cshtml" />
     <None Remove="Templates\investor-confirmation.cshtml" />
     <None Remove="Templates\investor-kyc-reminder.cshtml" />
     <None Remove="Templates\investor-layout.cshtml" />
@@ -17,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Templates\investor-20m-fix.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\investor-confirmation.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
