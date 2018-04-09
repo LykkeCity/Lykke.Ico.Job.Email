@@ -11,7 +11,7 @@
                 public const string InvestorNewTransaction = "New Transaction - VALID ITO";
                 public const string InvestorKycReminder = "KYC Reminder - VALID ITO";
                 public const string InvestorReferralCode = "Invite a Friend - VALID ITO";
-                public const string Investor20MFix = "20M Crowd Sale Discount - VALID ITO";
+                public const string Investor20MFix = "Token Amount Adjustment - VALID ITO";
             }
 
             public class BodyTemplates
